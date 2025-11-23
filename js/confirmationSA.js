@@ -1,41 +1,50 @@
+const themedSwal = Swal.mixin({
+    background: '#111827',
+    color: '#e5e7eb',
+    confirmButtonColor: '#22c55e', // accent
+    cancelButtonColor: '#6b7280',
+    iconColor: '#fbbf24',
+    focusConfirm: false,
+});
+
+// Helper to fire themed alerts elsewhere
+function fireThemed(options) {
+    return themedSwal.fire(options);
+}
+
 function confirmDelete(event) {
     event.preventDefault(); // Prevent form submission
+    const form = event.target;
 
-    // Display SweetAlert confirmation dialog
-    Swal.fire({
+    themedSwal.fire({
         title: 'Are you sure?',
         text: 'This action cannot be undone!',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#7dcabb',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, delete it',
+        cancelButtonText: 'Cancel',
     }).then((result) => {
         if (result.isConfirmed) {
-            // If user confirms, submit the form
-            event.target.submit();
+            form.submit();
         }
     });
 }
 
 function confirmCancel(event) {
     event.preventDefault(); // Prevent form submission
+    const form = event.target;
 
-    // Display SweetAlert confirmation dialog
-    Swal.fire({
+    themedSwal.fire({
         title: 'Are you sure?',
         text: 'This action cannot be undone!',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#7dcabb',
-        confirmButtonText: 'Yes!',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
         reverseButtons: false,  /* Prevents double-clicking */
-        cancelButtonText: 'No'
     }).then((result) => {
         if (result.isConfirmed) {
-            // If user confirms, submit the form
-            event.target.submit();
+            form.submit();
         }
     });
 }

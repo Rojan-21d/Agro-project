@@ -3,53 +3,57 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
-$errors = []; // Array to store validation errors
+$errors = [];
+$successMessage = '';
+$errorMessage = '';
 
-// Checking if the user is logged in
+// Protect route
 if (!isset($_SESSION['email'])) {
-    header("Location: login.php"); // Redirecting to Login Page
+    header("Location: login.php");
     exit;
 }
 
-//Database Connection
-$conn=new mysqli("localhost","root", "", "agro_council");
-    if($conn->connect_error){
-        die("Connection Error".$conn->connect_error);
-    }
-    include 'layout/header.php';
+// Database
+$conn = new mysqli("localhost", "root", "", "agro_council");
+if ($conn->connect_error) {
+    die("Connection Error" . $conn->connect_error);
+}
+
 $userSelects = $_SESSION['usertype'];
-
-if ($userSelects == "farmer") {
-    $sql = "SELECT * FROM farmer WHERE id = '" . $_SESSION['id'] . "'";
-} elseif ($userSelects == "counsellor") {
-    $sql = "SELECT * FROM counsellor WHERE id = '" . $_SESSION['id'] . "'";
+// Role-specific layout
+if ($userSelects === "counsellor") {
+    include 'counsellor/layout/header.php';
+    include 'counsellor/layout/sidebar.php';
+} else {
+    include 'layout/header.php';
+    include 'layout/left.php';
 }
+$table = ($userSelects === "farmer") ? "farmer" : "counsellor";
 
-$result = $conn->query($sql);
+// Fetch current user
+$stmt = $conn->prepare("SELECT name, address, mobile, email FROM $table WHERE id = ?");
+$stmt->bind_param("i", $_SESSION['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result ? $result->fetch_assoc() : null;
 
-$row = null;
-if ($result && $result->num_rows > 0) {
-    // Fetch values in row
-    $row = $result->fetch_assoc();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST['name']);
-    $address = trim($_POST['address']);
-    $mobile = trim($_POST['mobile']);
-    $email = trim($_POST['email']);
-    $newPassword = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = trim($_POST['name'] ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $mobile = trim($_POST['mobile'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $newPassword = $_POST['password'] ?? '';
 
     if (empty($name) || empty($email) || empty($mobile) || empty($address)) {
-        $errors[] = "All fields are required";
+        $errors[] = "All fields are required.";
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format";
+        $errors[] = "Invalid email format.";
     }
 
     if (!empty($newPassword) && (strlen($newPassword) < 8 || strlen($newPassword) > 16)) {
-        $errors[] = "Password must be between 8 and 16 characters";
+        $errors[] = "Password must be between 8 and 16 characters.";
     }
 
     if (strlen($mobile) !== 10 || !is_numeric($mobile)) {
@@ -57,175 +61,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($errors)) {
-        // Add fields to the update query
-        $updateSql .= " name = '$name', address = '$address', mobile = '$mobile', email = '$email'";
-        
-        if (!empty($newPassword)) {
-            // Update the password field if a new password is provided
-            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-            $updateSql .= ", password = '$hashedPassword'";
-        }
-        
-        // Complete the update query
-        $updateSql .= " WHERE id = " . $_SESSION['id'];
+        $query = "UPDATE $table SET name = ?, address = ?, mobile = ?, email = ?";
+        $types = "ssis";
+        $params = [$name, $address, $mobile, $email];
 
-        if ($conn->query($updateSql) === TRUE) {
-            // Update the session variables with the new values
+        if (!empty($newPassword)) {
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            $query .= ", password = ?";
+            $types .= "s";
+            $params[] = $hashedPassword;
+        }
+
+        $query .= " WHERE id = ?";
+        $types .= "i";
+        $params[] = $_SESSION['id'];
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param($types, ...$params);
+
+        if ($stmt->execute()) {
             $_SESSION['name'] = $name;
             $_SESSION['address'] = $address;
             $_SESSION['mobile'] = $mobile;
             $_SESSION['email'] = $email;
-            // Redirect to the profile page with a success message
-            header("Location: profile.php?success=1");
-            exit;
+            $successMessage = "Profile updated successfully.";
+            $row = ['name' => $name, 'address' => $address, 'mobile' => $mobile, 'email' => $email];
         } else {
-            // Redirect to the profile page with an error message
-            // header("Location: profile.php?error=1");
-            // Redirect to the profile page with a specific error message
-            header("Location: profile.php?error=db_update_failed");
-            exit;
+            $errorMessage = "Error updating profile. Please try again.";
         }
-    } // Display errors using SweetAlert
-    else if (!empty($errors)) {
-        $errorMessages = join("\n", $errors);
-        echo '<script>
-        swal({title:"Error!",text:"' .$errorMessages.'",icon : "warning"});
-        Swal.fire({
-            icon: "error",
-            title: "Sign Up Errors",
-            html: "' . $errorMessages . '",
-            showCloseButton: true,
-        });
-        </script>';
+    } else {
+        $errorMessage = implode("<br>", $errors);
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="css/profile.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="css/sweetAlert.css">
-    <script>
-        document.querySelector('form').addEventListener('submit', function (event) {
-            if (!validateForm()) {
-                event.preventDefault();
-            }
-        });
-        // Client-side validation function with SweetAlert integration
-        function validateForm() {
-            var errors = [];
-            var name = document.getElementById("name").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var mobile = document.getElementById("mobile").value; // Corrected ID
-            
-            if (name === "") {
-                errors.push("Name is required.");
-            }
-            
-            if (email === "") {
-                errors.push("Email is required.");
-            } else if (!validateEmail(email)) {
-                errors.push("Invalid email format.");
-            }
-            
-            if (password !== "") { // Check if password is provided
-                if (password.length < 8 || password.length > 16) {
-                    errors.push("Password must be between 8 and 16 characters.");
-                }
-            }
-            
-            if (mobile === "") {
-                errors.push("Mobile number is required.");
-            } else if (mobile.length !== 10) {
-                errors.push("Mobile number must be 10 digits.");
-            }
-            
-            // Display errors using SweetAlert with bullet points
-            if (errors.length > 0) {
-                var errorMessage = `<div class="error-list">${errors.map(error => `• ${error}`).join("<br>")}</div>`;
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Update Error',
-                    html: errorMessage,
-                    showCloseButton: true,
-                });
-                
-                return false; // Prevent form submission
-            }
-            
-            return true; // Allow form submission
-        }
-        
-        function validateEmail(email) {
-            var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            return re.test(email);
-        }
-        
-        function enableEdit(field) {
-            document.getElementById(field).readOnly = false;
-        }
-        
-        function openFileInput() {
-            document.getElementById('profile_pic').click();
-        }    
-    </script>
-</head>
-<body>
-<div class="container">
-    <h1>Your Profile</h1>
-        <!-- <a href="home.php" class="back-button">Back</a> -->
-        <?php if (isset($_GET['success'])) { ?>
-            <div class="success-message">
-                Update successful!
-            </div>
-        <?php } elseif (isset($_GET['error'])) { ?>
-            <div class="error-message">
-                Update failed!
-            </div>
-        <?php } ?>
-        <form action="" method="POST" onsubmit="return validateForm();" enctype="multipart/form-data">
-        <!-- <div class="profile-picture">
-            <img src="<?php //echo $row['img_srcs']; ?>" alt="Profile Picture" id="profilePicPreview">
-            <input type="file" name="profile_pic" id="profile_pic" accept="image/*" style="display: none;" onchange="previewImage(event)">
-            <button type="button" class="edit-button" onclick="openFileInput()">Edit</button>
-        </div>        -->
-        
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="<?php echo isset($row['name']) ? $row['name'] : ''; ?>" readonly>
-            <button type="button" class="edit-button" onclick="enableEdit('name')">Edit</button>
+<link rel="stylesheet" type="text/css" href="css/profile.css">
+<div class="container profile-shell">
+    <div class="profile-head">
+        <div>
+            <p class="eyebrow">Account</p>
+            <h1>Your Profile</h1>
+            <p class="muted">View and update your details in one place.</p>
         </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" value="<?php echo isset($row['address']) ? $row['address'] : ''; ?>" readonly>
-            <button type="button" class="edit-button" onclick="enableEdit('address')">Edit</button>
+        <span class="pill"><?php echo ucfirst($userSelects); ?></span>
+    </div>
+
+    <form action="" method="POST" class="profile-form" id="profileForm">
+        <div class="form-grid">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($row['name'] ?? ''); ?>" readonly>
+
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($row['address'] ?? ''); ?>" readonly>
+
+            <label for="mobile">Mobile</label>
+            <input type="text" id="mobile" name="mobile" value="<?php echo htmlspecialchars($row['mobile'] ?? ''); ?>" readonly>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($row['email'] ?? ''); ?>" readonly>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter new password (optional)">
         </div>
-        <div class="form-group">
-            <label for="contact">Mobile:</label>
-            <input type="text" id="mobile" name="mobile" value="<?php echo isset($row['mobile']) ? $row['mobile'] : ''; ?>" readonly>
-            <button type="button" class="edit-button" onclick="enableEdit('mobile')">Edit</button>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>" readonly>
-            <button type="button" class="edit-button" onclick="enableEdit('email')">Edit</button>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter new password">
-            <button type="button" class="edit-button" onclick="enableEdit('password')">Edit</button>
-        </div>
-        
-        <div class="form-group">
-            <input type="submit" value="Save Changes">
+
+        <div class="actions">
+            <button type="button" class="ghost" id="editToggle">Edit</button>
+            <button type="submit">Save changes</button>
+            <a href="<?php echo $_SESSION['usertype'] == 'farmer' ? 'home.php' : 'counsellor/view_predicament.php'; ?>" class="ghost link">Back</a>
         </div>
     </form>
-    <a href="<?php echo $_SESSION['usertype'] == 'farmer' ? 'home.php' : 'counsellor/view_predicament.php'; ?>" class="back-button">Back</a>
-    
 </div>
-</body>
-</html>
+
+<script>
+    <?php if (!empty($successMessage)) { ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.fireThemed) {
+            fireThemed({icon:'success', title:'Saved', text:'<?php echo $successMessage; ?>'});
+        } else {
+            Swal.fire({icon:'success', title:'Saved', text:'<?php echo $successMessage; ?>'});
+        }
+    });
+    <?php } ?>
+    <?php if (!empty($errorMessage)) { ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.fireThemed) {
+            fireThemed({icon:'error', title:'Error', html:'<?php echo $errorMessage; ?>'});
+        } else {
+            Swal.fire({icon:'error', title:'Error', html:'<?php echo $errorMessage; ?>'});
+        }
+    });
+    <?php } ?>
+
+    const toggleBtn = document.getElementById('editToggle');
+    const inputs = document.querySelectorAll('.profile-form input:not([name="password"])');
+
+    toggleBtn.addEventListener('click', () => {
+        const isReadOnly = inputs[0].hasAttribute('readonly');
+        inputs.forEach(input => {
+            if (isReadOnly) {
+                input.removeAttribute('readonly');
+                input.classList.add('editable');
+            } else {
+                input.setAttribute('readonly', 'readonly');
+                input.classList.remove('editable');
+            }
+        });
+        toggleBtn.textContent = isReadOnly ? 'Cancel' : 'Edit';
+    });
+</script>

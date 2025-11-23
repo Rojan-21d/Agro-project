@@ -2,102 +2,147 @@
     display: grid;
     justify-items: center;
     align-items: center;
-    /* text-align: center; */
-    padding: 20px;
-    /* border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    /* max-width: 400px; */
+    padding: 24px;
     width: 100%;
     height: fit-content;
-  }
+    gap: 16px;
+}
 
 h1 {
   text-align: center;
-  font-size: 25px;
+  font-size: 26px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: black;
-  padding: 30px 0;
+  color: #e8f1ff;
+  padding: 20px 0 10px;
 }
 
 .table-wrapper {
-  padding: 20px;
-  margin: 10px 70px 70px;
-  box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
-  /* width: 50%; */
+  padding: 22px;
+  margin: 0 0 40px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
   height: fit-content;
   display: flexbox;
   justify-content: space-between;
-  font-size: 20px;
-  width: -webkit-fill-available;
-  background-color: #001C30;
-  border-radius: 20px;
+  font-size: 18px;
+  width: 100%;
+  background: #1f2937;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(2px);
+  overflow-x: auto;
 }
 
 .fl-table {
-  border-radius: 5px;
-  font-size: 20px;
-  font-weight: normal;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 500;
   border: none;
   border-collapse: collapse;
   width: 100%;
   max-width: 100%;
+  min-width: 720px;
   white-space: nowrap;
-  background-color: #176B87;
-  border-radius: 10px;
+  background: #111827;
+  overflow: hidden;
 }
 
 .fl-table td,
 .fl-table th {
   text-align: center;
-  padding: 8px;
-  
+  padding: 12px;
 }
 
 .fl-table td {
-  border-right: 1px solid #080000;
-  font-size: 16px;
-  
+  border-right: 1px solid rgba(255,255,255,0.04);
+  font-size: 15px;
+  color: #e8f1ff;
 }
 
 .fl-table thead th {
-  color: #0f0101;
-  background: #4fc3a1;
+  color: #0b1b2c;
+  background: #e5e7eb;
+  font-size: 14px;
+  letter-spacing: 0.6px;
 }
 
 .fl-table thead th:nth-child(odd) {
-  color: #ffffff;
-  background: #324960;
+  color: #0b1b2c;
+  background: #d1d5db;
 }
 
 .fl-table tr:nth-child(even) {
-  background: #f8f8f8;
+  background: rgba(255,255,255,0.02);
+}
+
+.fl-table tr.clickable {
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.08s ease;
+}
+
+.fl-table tr.clickable:hover {
+  background: rgba(56,189,248,0.08);
+  transform: translateY(-1px);
 }
 
 input[type="submit"] {
-  padding: 10px;
+  padding: 10px 14px;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #294D61;
-  color: #ffffff;
+  border-radius: 12px;
+  font-size: 14px;
+  background: #22c55e;
+  color: #0f172a;
   cursor: pointer;
-  display: grid;
-  justify-items: left;
-  border-radius: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  box-shadow: none;
+  transition: transform 0.1s ease, opacity 0.15s ease;
 }
 
 input[type="submit"]:hover {
-  background-color: #4fc3a1;
+  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
 input[type="submit"]:focus {
-  outline: none;
+  outline: 2px solid rgba(96,165,250,0.4);
+  outline-offset: 2px;
 }
 
 .button-row {
   display: flex;
-  gap: 10px; /* Adjust the spacing between buttons as needed */
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-row.inline {
+  justify-content: center;
+}
+
+.action-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Keep action buttons side by side on desktop */
+.action-cell .button-row {
+  flex-wrap: nowrap;
+}
+.action-cell form {
+  margin: 0;
+  display: flex;
+  flex: 0 1 auto;
+}
+.action-cell input[type="submit"] {
+  padding: 10px 12px;
+  min-width: 110px;
+  width: auto;
 }
 
 
@@ -105,7 +150,7 @@ input[type="submit"]:focus {
 
 form {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .table-wrapper table > tbody > tr > td:nth-child(4){
@@ -114,5 +159,39 @@ form {
   text-align: justify;
 }
 
+@media (max-width: 980px) {
+  h1 {
+    font-size: 22px;
+  }
+  .table-wrapper {
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .fl-table {
+    min-width: 600px;
+    font-size: 15px;
+  }
+  .fl-table td,
+  .fl-table th {
+    padding: 10px;
+  }
+}
 
-
+@media (max-width: 720px) {
+  .table-wrapper {
+    padding: 12px;
+  }
+  .fl-table {
+    min-width: 520px;
+  }
+  input[type="submit"] {
+    width: 100%;
+    justify-content: center;
+  }
+  .button-row {
+    flex-direction: column;
+  }
+  .action-cell .button-row {
+    flex-wrap: wrap;
+  }
+}

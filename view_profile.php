@@ -16,8 +16,15 @@ $conn=new mysqli("localhost","root", "", "agro_council");
     if($conn->connect_error){
         die("Connection Error".$conn->connect_error);
     }
-    include 'layout/header.php';
+// Role-specific layout
 $userSelects = $_SESSION['usertype'];
+if ($userSelects === "counsellor") {
+    include 'counsellor/layout/header.php';
+    include 'counsellor/layout/sidebar.php';
+} else {
+    include 'layout/header.php';
+    include 'layout/left.php';
+}
 
 if ($userSelects == "farmer") {
     $sql = "SELECT * FROM farmer WHERE id = '" . $_SESSION['id'] . "'";

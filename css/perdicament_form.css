@@ -1,111 +1,188 @@
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --card: #1f2937;
+  --accent: #22c55e;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --radius: 14px;
+  --font: "Manrope", "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
 /* CSS for form container */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: max-content;
-  width: -webkit-fill-available;
-  margin: 70px auto;
+  width: 100%;
+  margin: 50px auto;
   padding: 20px;
 }
 
 #right {
-  background-color: #f1f1f1;
-  max-width: 400px;
-  width: 100%;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--card);
+  max-width: 100%;
+  width: 96%;
+  padding: 26px;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
 }
 
 #right h1 {
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 24px;
-  color: #333;
+  color: var(--text);
   display: flex;
   justify-content: center;
+  letter-spacing: 0.5px;
 }
 
 #right a {
-  display: flex; 
-  margin: 0 auto;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  color: #333;
-  border: 1px solid #333;
-  padding: 12px 34px;
-  width:30%;
-  font-size: 13px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 12px 18px;
+  width: auto;
+  font-size: 14px;
   background: transparent;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 #right label {
   display: block;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #555;
-  /* padding: 10px; */
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
 }
 
 #right a:hover {
-  background-color: #333;
+  background-color: rgba(255,255,255,0.06);
   color: #fff;
 }
 
 /* CSS for form fields */
 .textbox {
-  margin-bottom: 5px;
+  margin-bottom: 14px;
 }
 
 .textbox label {
   display: block;
-  margin-bottom: 10px;
-  color: #555;
-  width: -webkit-fill-available;
+  margin-bottom: 8px;
+  color: var(--muted);
+  width: 100%;
 }
 
 .textbox textarea {
-  width: -webkit-fill-available;
-  height: 150px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  min-height: 150px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0f172a;
+  color: var(--text);
 }
 
 input[type="text"],
 textarea {
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
-  width: -webkit-fill-available;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0f172a;
+  color: var(--text);
 }
 
 input[type="submit"] {
-  display: block;
-  margin: 0 auto; /* This centers the element horizontally */
-  background-color: #4caf50;
-  color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: #0f172a;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: 700;
+  transition: transform 0.1s ease, opacity 0.15s ease;
 }
 
 input[type="submit"]:hover {
-  background-color: #45a049;
-
+  transform: translateY(-1px);
+  opacity: 0.92;
 }
 
-/* Additional styles */
-/* body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
-} */
+#right .detail-box {
+  padding: 14px;
+  background: #0f172a;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+#right .pillish {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+#right .button-row,
+#right .actions-inline {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.actions-inline input[type="submit"],
+.actions-inline a {
+  flex: 1 0 150px;
+  min-width: 150px;
+  text-align: center;
+}
+
+.ghost-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.ghost-btn:hover {
+  background-color: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  #right {
+    padding: 18px;
+    max-width: 100%;
+  }
+  #right .button-row,
+  #right .actions-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  input[type="submit"],
+  #right a {
+    width: 100%;
+    justify-content: center;
+  }
+}

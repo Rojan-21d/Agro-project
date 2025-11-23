@@ -15,7 +15,7 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2023 AGROCOUNCIL, All Rights Reserved.</p>
+            <p>&copy; 2025 AGROCOUNCIL, All Rights Reserved.</p>
         </div>
     </div>
 </body>

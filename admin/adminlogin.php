@@ -12,22 +12,28 @@ if(isset($_POST['login']))
     $adminname = $_POST['adminname'];
     $adminpassword = $_POST['adminpassword'];
     
-    $sql = "SELECT * FROM admin WHERE adminname = '$adminname' and adminpassword = '$adminpassword'";
+    $stmt = $conn->prepare("SELECT adminpassword FROM admin WHERE adminname = ?");
+    $stmt->bind_param("s", $adminname);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result && $result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $stored = $row['adminpassword'];
+        $valid = password_verify($adminpassword, $stored) || $adminpassword === $stored; // backward compatibility for legacy plaintext
 
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $_SESSION['adminname'] = $adminname;
+        if ($valid) {
+            $_SESSION['adminname'] = $adminname;
 
-        // For logout Purpose
-        $_SESSION['admin'] =  $_POST['adminname'];
-        // Redirect to the admin panel page
-        header ("Location: adminpanel.php");
-        exit();
-    }else{
-        // Redirect to the same login page with an error message
-        header("Location: adminlogin.php?error=1");
-        exit;
+            // For logout Purpose
+            $_SESSION['admin'] =  $_POST['adminname'];
+            // Redirect to the admin panel page
+            header ("Location: adminpanel.php");
+            exit();
+        }
     }
+    // Redirect to the same login page with an error message
+    header("Location: adminlogin.php?error=1");
+    exit;
 }
 ?>
 
@@ -36,24 +42,34 @@ if(isset($_POST['login']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../css/adminlogin.css">
 </head>
-<link rel="stylesheet" href="../css/adminlogin.css">
 <body>
-    <div class="container">
-    <div class="login-form">
-    <h2>ADMIN LOGIN PANEL</h2>
-    <form action="" method="post" autocomplete="off">
-        <div class="input-field">
-            <input type="text" placeholder="Admin Name" name="adminname">
+    <div class="admin-auth-shell">
+        <div class="admin-auth-card">
+            <div class="admin-auth-header">
+                <p class="eyebrow">Admin</p>
+                <h1>Sign in</h1>
+                <p class="helper">Manage approvals and content securely.</p>
+            </div>
+            <form action="" method="post" autocomplete="off" class="admin-auth-form">
+                <div class="field">
+                    <label for="adminname">Admin name</label>
+                    <input type="text" placeholder="Enter admin name" name="adminname" id="adminname" required>
+                </div>
+                <div class="field">
+                    <label for="adminpassword">Password</label>
+                    <input type="password" placeholder="Enter password" name="adminpassword" id="adminpassword" required>
+                </div>
+                <div class="button-row">
+                    <button type="submit" name="login">Log in</button>
+                </div>
+                <?php if (isset($_GET['error'])) { ?>
+                    <div class="admin-alert">Invalid credentials. Try again.</div>
+                <?php } ?>
+            </form>
         </div>
-        <div class="input-field">
-            <input type="password" placeholder="Password" name="adminpassword">
-        </div>
-        <button type="submit" name="login">Log in</button>
-
-    </form>
-    </div>
     </div>
 </body>
 </html>

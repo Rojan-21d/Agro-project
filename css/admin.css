@@ -33,32 +33,70 @@ body {
     color: var(--admin-text);
 }
 
-.head-table{
-    text-align: center;
-    margin: 0 auto 16px;
-    column-gap: 10px;
+.admin-toolbar{
     display: flex;
-    justify-content: center;
-}
-
-.head-table button{
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: 1px solid var(--admin-border);
-    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 auto 18px;
+    padding: 16px 18px;
     background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow);
+}
+
+.admin-toolbar__copy h2{
+    margin: 2px 0 4px;
+    font-size: 20px;
+}
+
+.admin-toolbar__copy .eyebrow{
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-size: 11px;
+    color: var(--admin-muted);
+    margin: 0;
+}
+
+.admin-toolbar__copy .muted{
+    color: var(--admin-muted);
+    margin: 0;
+}
+
+.segment{
+    display: inline-flex;
+    gap: 8px;
+    background: #0b1627;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid var(--admin-border);
+}
+
+.segment form{
+    display: inline-flex;
+}
+
+.segment button{
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: transparent;
     color: var(--admin-text);
-    transition: transform 0.12s ease, border 0.2s ease, background 0.2s ease;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    transition: transform 0.12s ease, border 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
-.head-table button:hover{
+.segment button:hover{
     transform: translateY(-1px);
-    border-color: rgba(56,189,248,0.4);
+    background: rgba(56,189,248,0.08);
 }
 
-.admin-main .head-table button.selected {
-    background: var(--admin-accent);
-    color: #0f172a;
+.segment button.selected {
+    background: var(--admin-text);
+    color: #0b1220;
     border-color: transparent;
 }
 

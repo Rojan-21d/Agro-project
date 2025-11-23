@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 
 session_start();
 
+include('../counsellor/layout/header.php');
+include('../counsellor/layout/sidebar.php');
+
 // Database Connection
 $conn = new mysqli("localhost", "root", "", "agro_council");
 if ($conn->connect_error) {
@@ -55,8 +58,10 @@ if(isset($_POST['add_guidelines'])) {
             <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="counsellorid">
             <input type="hidden" value="<?php echo $pid; ?>" name="pid" />
 
-            <input type="submit" value="Add Guidelines" name="add"/><br>
-            <a href="view_predicament.php">Back</a>
+            <div class="button-row actions-inline">
+                <input type="submit" value="Add Guidelines" name="add"/>
+                <a class="ghost-btn" href="view_predicament.php">Cancel</a>
+            </div>
         </form>
     </div>
 </div>
