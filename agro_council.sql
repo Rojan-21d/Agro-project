@@ -156,6 +156,7 @@ CREATE TABLE `predicament` (
   `farmer_id` int(11) NOT NULL,
   `title` varchar(30) NOT NULL,
   `description` text NOT NULL,
+  `photo_path` varchar(255) DEFAULT NULL,
   `submitted_date` datetime NOT NULL DEFAULT current_timestamp(),
   `priority_score` int(11) DEFAULT NULL,
   `recommended_counsellor_id` int(11) DEFAULT NULL
@@ -165,13 +166,13 @@ CREATE TABLE `predicament` (
 -- Dumping data for table `predicament`
 --
 
-INSERT INTO `predicament` (`pid`, `farmer_id`, `title`, `description`, `submitted_date`, `priority_score`, `recommended_counsellor_id`) VALUES
-(401, 201, 'Goat coughing and fever', 'Many goats showing fever, coughing and weakness. Might be infection.', '2025-11-24 17:02:22', NULL, NULL),
-(402, 201, 'Goat feed quality issue', 'Feed looks old, animals not eating properly.', '2025-11-24 17:02:22', NULL, NULL),
-(403, 202, 'Armyworm infestation in maize', 'Leaves eaten, larvae found, infestation spreading.', '2025-11-24 17:02:22', NULL, NULL),
-(404, 202, 'Soil pH imbalance', 'Acidic soil harming maize seedlings.', '2025-11-24 17:02:22', NULL, NULL),
-(405, 204, 'Goat coughing and fever', 'Many goats showing fever, coughing and weakness. Might be infection.', '2025-11-24 19:35:54', NULL, NULL),
-(406, 204, 'Feed quality question', 'Feed looks old, animals not eating properly.', '2025-11-24 19:36:24', NULL, NULL);
+INSERT INTO `predicament` (`pid`, `farmer_id`, `title`, `description`, `photo_path`, `submitted_date`, `priority_score`, `recommended_counsellor_id`) VALUES
+(401, 201, 'Goat coughing and fever', 'Many goats showing fever, coughing and weakness. Might be infection.', NULL, '2025-11-24 17:02:22', NULL, NULL),
+(402, 201, 'Goat feed quality issue', 'Feed looks old, animals not eating properly.', NULL, '2025-11-24 17:02:22', NULL, NULL),
+(403, 202, 'Armyworm infestation in maize', 'Leaves eaten, larvae found, infestation spreading.', NULL, '2025-11-24 17:02:22', NULL, NULL),
+(404, 202, 'Soil pH imbalance', 'Acidic soil harming maize seedlings.', NULL, '2025-11-24 17:02:22', NULL, NULL),
+(405, 204, 'Goat coughing and fever', 'Many goats showing fever, coughing and weakness. Might be infection.', NULL, '2025-11-24 19:35:54', NULL, NULL),
+(406, 204, 'Feed quality question', 'Feed looks old, animals not eating properly.', NULL, '2025-11-24 19:36:24', NULL, NULL);
 
 --
 -- Indexes for dumped tables

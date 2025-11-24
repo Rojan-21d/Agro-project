@@ -171,13 +171,20 @@ input[type="submit"]:hover {
 }
 
 .ghost-btn {
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  min-width: 180px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  background: #e2e8f0;
   border: 1px solid var(--border);
   color: var(--text);
 }
 
 .ghost-btn:hover {
-  background-color: #e2e8f0;
+  background-color: #dbeafe;
   color: #0f172a;
 }
 

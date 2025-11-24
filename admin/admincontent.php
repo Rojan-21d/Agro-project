@@ -76,6 +76,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
     
 }
 }
+
+function truncateText($text, $limit = 30) {
+    $text = trim($text ?? '');
+    return (strlen($text) > $limit) ? substr($text, 0, $limit) . '...' : $text;
+}
 ?>
 
 <div class="admin-main">
@@ -122,10 +127,18 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
 
                     $i = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr><td>$i</td>";
+                        $guidelineId = $row['gid'] ?? null;
+                        $rowClass = ($table === 'guidelines' && $guidelineId) ? " class='clickable' data-href=\"/Agro-project/admin/guideline_detail.php?gid={$guidelineId}\"" : "";
+                        echo "<tr{$rowClass}><td>$i</td>";
                         foreach ($row as $column => $value) {
                             if (!in_array($column, $excludedColumns)) {
-                                echo "<td>$value</td>";
+                                if ($table === 'guidelines' && $column === 'title') {
+                                    echo "<td>" . htmlspecialchars(truncateText($value)) . "</td>";
+                                } elseif ($table === 'guidelines' && $column === 'description') {
+                                    echo "<td>" . htmlspecialchars(truncateText($value)) . "</td>";
+                                } else {
+                                    echo "<td>" . htmlspecialchars($value) . "</td>";
+                                }
                             }
                             if ($column === 'id' || $column === 'gid') {
                                 $id = $value;
@@ -164,3 +177,19 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
     </div>
 </div>
 <script src="../js/confirmationSA.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        document.querySelectorAll('tr.clickable').forEach(function(row){
+            row.addEventListener('click', function(e){
+                if (e.target.closest('form') || ['INPUT','BUTTON','A','SELECT','OPTION','LABEL'].includes(e.target.tagName)) {
+                    return;
+                }
+                const href = row.getAttribute('data-href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+            row.style.cursor = 'pointer';
+        });
+    });
+</script>

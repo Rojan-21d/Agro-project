@@ -1,11 +1,11 @@
 :root {
-  --bg: #0f172a;
-  --panel: #111827;
-  --card: #1f2937;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --card: #ffffff;
   --accent: #22c55e;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --border: rgba(255,255,255,0.08);
+  --text: #0f172a;
+  --muted: #4b5563;
+  --border: rgba(15,23,42,0.08);
   --radius: 14px;
   --font: "Manrope", "Segoe UI", sans-serif;
 }
@@ -27,7 +27,7 @@
   width: 100%;
   padding: 26px;
   border-radius: var(--radius);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 28px rgba(15,23,42,0.12);
   border: 1px solid var(--border);
 }
 
@@ -54,7 +54,7 @@
   margin-bottom: 15px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #0f172a;
+  background: #ffffff;
   color: var(--text);
 }
 
@@ -94,8 +94,8 @@
 }
 
 #right a:hover {
-  background-color: rgba(255,255,255,0.06);
-  color: #fff;
+  background-color: #e2e8f0;
+  color: #0f172a;
 }
 
 .actions-inline {
@@ -120,8 +120,8 @@
 }
 
 .ghost-btn:hover {
-  background-color: rgba(255,255,255,0.06);
-  color: #fff;
+  background-color: #e2e8f0;
+  color: #0f172a;
 }
 
 select {
@@ -131,5 +131,5 @@ select {
   width: 100%;
   color: var(--text);
   font-size: 16px;
-  background: #0f172a;
+  background: #ffffff;
 }

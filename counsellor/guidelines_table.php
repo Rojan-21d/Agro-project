@@ -34,6 +34,11 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
     $stmt->execute();
     $result = $stmt->get_result();
 }
+
+function truncateText($text, $limit = 30) {
+    $text = trim($text ?? '');
+    return (strlen($text) > $limit) ? substr($text, 0, $limit) . '...' : $text;
+}
 ?>
 
 <link rel="stylesheet" href="../css/table.css">
@@ -59,12 +64,12 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                 <?php if (isset($result) && $result->num_rows > 0) { // Check if $result is set
                     $i = 1;
                     while ($row = $result->fetch_assoc()) { ?>
-                        <tr>
+                        <tr class="clickable" data-href="guideline_detail.php?gid=<?php echo $row['gid']; ?>">
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $row['farmer_name']; ?></td>
-                            <td><?php echo $row['predicament_title']; ?></td>
-                            <td><?php echo $row['guideline_title']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td><?php echo htmlspecialchars(truncateText($row['predicament_title'])); ?></td>
+                            <td><?php echo htmlspecialchars(truncateText($row['guideline_title'])); ?></td>
+                            <td><?php echo htmlspecialchars(truncateText($row['description'])); ?></td>
                             <td><?php echo $row['submitted_date']; ?></td>
 
                             <td class="action-cell">
@@ -96,4 +101,20 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/confirmationSA.js"></script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        document.querySelectorAll('tr.clickable').forEach(function(row){
+            row.addEventListener('click', function(e){
+                const target = e.target;
+                if (target.closest('form') || target.tagName === 'INPUT' || target.tagName === 'BUTTON' || target.tagName === 'A') {
+                    return;
+                }
+                const href = row.getAttribute('data-href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+            row.style.cursor = 'pointer';
+        });
+    });
+</script>
