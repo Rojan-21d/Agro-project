@@ -1,11 +1,11 @@
 :root {
-  --bg: #0f172a;
-  --panel: #111827;
-  --card: #1f2937;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --card: #ffffff;
   --accent: #22c55e;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --border: rgba(255,255,255,0.08);
+  --text: #0f172a;
+  --muted: #4b5563;
+  --border: rgba(15,23,42,0.08);
   --radius: 14px;
   --font: "Manrope", "Segoe UI", sans-serif;
 }
@@ -34,7 +34,7 @@ body {
   width: 96%;
   padding: 26px;
   border-radius: var(--radius);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 28px rgba(15,23,42,0.12);
   border: 1px solid var(--border);
 }
 
@@ -71,8 +71,8 @@ body {
 }
 
 #right a:hover {
-  background-color: rgba(255,255,255,0.06);
-  color: #fff;
+  background-color: #e2e8f0;
+  color: var(--text);
 }
 
 /* CSS for form fields */
@@ -93,7 +93,7 @@ body {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #0f172a;
+  background: #ffffff;
   color: var(--text);
 }
 
@@ -104,8 +104,19 @@ textarea {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #0f172a;
+  background: #ffffff;
   color: var(--text);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="file"] {
+  padding: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--muted);
 }
 
 input[type="submit"] {
@@ -129,7 +140,7 @@ input[type="submit"]:hover {
 
 #right .detail-box {
   padding: 14px;
-  background: #0f172a;
+  background: #f8fafc;
   border-radius: 10px;
   border: 1px solid var(--border);
   color: var(--text);
@@ -140,7 +151,7 @@ input[type="submit"]:hover {
   display: inline-flex;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.05);
+  background: #e2e8f0;
   color: var(--text);
   border: 1px solid var(--border);
 }
@@ -166,8 +177,28 @@ input[type="submit"]:hover {
 }
 
 .ghost-btn:hover {
-  background-color: rgba(255,255,255,0.06);
-  color: #fff;
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.helper {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.preview {
+  margin-top: 8px;
+}
+
+.photo-thumb {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  box-shadow: 0 10px 18px rgba(15,23,42,0.12);
 }
 
 @media (max-width: 768px) {
