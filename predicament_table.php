@@ -7,6 +7,8 @@ session_start();
 // Include Files
 include('layout/header.php');
 include('layout/left.php');
+require_once __DIR__ . '/algorithms/predicament_priority.php';
+$predicaments = [];
 
 // Database Connection
 $conn = new mysqli("localhost", "root", "", "agro_council");
@@ -29,10 +31,31 @@ if (isset($_POST['delete'])) {
 
 // Fetch Predicament
 if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
-    $stmt = $conn->prepare("SELECT * FROM predicament WHERE farmer_id = ?");
+    $stmt = $conn->prepare("SELECT predicament.*, farm.farm_area, farm.farm_unit, farm.farm_type 
+                            FROM predicament 
+                            LEFT JOIN (
+                                SELECT farmer_id, MAX(fid) as fid, MAX(farm_area) as farm_area, MAX(farm_unit) as farm_unit, MAX(farm_type) as farm_type
+                                FROM farm
+                                GROUP BY farmer_id
+                            ) as farm ON predicament.farmer_id = farm.farmer_id 
+                            WHERE predicament.farmer_id = ?");
     $stmt->bind_param("i", $_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
+    $predicaments = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $scoreData = score_predicament_priority(
+                ['title' => $row['title'], 'description' => $row['description']],
+                ['farm_area' => $row['farm_area'], 'farm_unit' => $row['farm_unit'], 'farm_type' => $row['farm_type']]
+            );
+            $row['priority_score'] = $scoreData['score'];
+            $predicaments[] = $row;
+        }
+        usort($predicaments, function ($a, $b) {
+            return $b['priority_score'] <=> $a['priority_score'];
+        });
+    }
 }
 ?>
 
@@ -48,16 +71,18 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                     <th width=25%>Title</th>
                     <th width=45%>Description</th>
                     <th width=10%>Submitted Date</th>
+                    <th width=10%>Priority</th>
                     <th width=26%>Action</th>
                 </tr>
-                <?php if (isset($result) && $result->num_rows > 0) { // Check if $result is set
+                <?php if (!empty($predicaments)) { // Check if $result is set
                     $i = 1;
-                    while ($row = $result->fetch_assoc()) { ?>
+                    foreach ($predicaments as $row) { ?>
                         <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $row['title']; ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td><?php echo $row['submitted_date']; ?></td>
+                            <td><?php echo $row['priority_score']; ?></td>
 
                             <td class="action-cell">
                                 <div class="button-row">
