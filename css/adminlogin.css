@@ -1,13 +1,13 @@
 :root {
-  --admin-bg: #0b1220;
-  --admin-card: #0f1c31;
-  --admin-panel: #111f38;
+  --admin-bg: #f5f7fb;
+  --admin-card: #ffffff;
+  --admin-panel: #ffffff;
   --admin-accent: #22c55e;
-  --admin-text: #e5ecf8;
-  --admin-muted: #94a3b8;
-  --admin-border: rgba(255,255,255,0.08);
+  --admin-text: #0f172a;
+  --admin-muted: #4b5563;
+  --admin-border: rgba(15,23,42,0.08);
   --admin-radius: 14px;
-  --admin-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  --admin-shadow: 0 20px 40px rgba(15,23,42,0.12);
   --admin-font: "Manrope","Segoe UI",sans-serif;
 }
 
@@ -19,7 +19,7 @@
 }
 
 body{
-  background: linear-gradient(160deg, #0b1220, #0f1c31);
+  background: linear-gradient(160deg, #f8fbff, #eef2ff);
   color: var(--admin-text);
 }
 
@@ -51,7 +51,7 @@ body{
 
 .admin-auth-header h1{
   margin: 0 0 6px;
-  color: #fff;
+  color: var(--admin-text);
   font-size: 28px;
 }
 
@@ -84,7 +84,7 @@ body{
   padding: 12px;
   border: 1px solid var(--admin-border);
   border-radius: 12px;
-  background: #0f172a;
+  background: #ffffff;
   color: var(--admin-text);
 }
 
@@ -113,7 +113,7 @@ body{
   margin-top: 10px;
   padding: 10px 12px;
   border-radius: 10px;
-  background: rgba(239,68,68,0.12);
-  color: #fecaca;
-  border: 1px solid var(--admin-border);
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid rgba(248,113,113,0.35);
 }

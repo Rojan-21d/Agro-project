@@ -1,12 +1,12 @@
 :root {
-  --bg: #0b1220;
-  --panel: rgba(13, 26, 48, 0.82);
+  --bg: #f5f7fb;
+  --panel: rgba(255, 255, 255, 0.92);
   --accent: #22c55e;
-  --accent-2: #38bdf8;
-  --text: #e8f1ff;
-  --muted: #9fb3c8;
-  --card: rgba(16, 25, 45, 0.92);
-  --border: rgba(255,255,255,0.08);
+  --accent-2: #0ea5e9;
+  --text: #0f172a;
+  --muted: #4b5563;
+  --card: #ffffff;
+  --border: rgba(15,23,42,0.08);
   --radius: 16px;
   --font: "Manrope", "Segoe UI", sans-serif;
 }
@@ -16,7 +16,7 @@
 .header{
     min-height: 100vh;
     width: 100%;
-    background: radial-gradient(circle at 20% 20%, rgba(34,197,94,0.12), transparent 30%), radial-gradient(circle at 80% 0%, rgba(56,189,248,0.18), transparent 32%), linear-gradient(145deg, #0b1220, #0f1c31);
+    background: radial-gradient(circle at 20% 20%, rgba(34,197,94,0.14), transparent 32%), radial-gradient(circle at 80% 0%, rgba(14,165,233,0.2), transparent 34%), linear-gradient(145deg, #f8fbff, #eef2ff);
     position: relative;
     overflow: hidden;
 }
@@ -28,6 +28,10 @@ nav{
     position: sticky;
     top: 0;
     z-index: 5;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.1);
 }
 nav img{
     width: 110px;
@@ -55,14 +59,14 @@ nav img{
     font-weight: 700;
 }
 .nav-links ul li:hover{
-    background: rgba(255,255,255,0.06);
+    background: #e2e8f0;
     transform: translateY(-1px);
 }
 
 .text-box{
     width: 90%;
     max-width: 1040px;
-    color: #fff;
+    color: var(--text);
     position: relative;
     margin: 90px auto 40px;
     text-align: center;
@@ -70,7 +74,7 @@ nav img{
 }
 .text-box h1{
     font-size: clamp(34px, 4vw, 56px);
-    color: #fff;
+    color: var(--text);
     letter-spacing: 0.5px;
 }
 .text-box p{
@@ -92,7 +96,7 @@ nav img{
     border-radius: 12px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: none;
+    box-shadow: 0 12px 24px rgba(34,197,94,0.22);
     transition: transform 0.12s ease, opacity 0.15s ease;
 }
 .l-btn:hover{
@@ -110,7 +114,7 @@ nav img{
 h1{
     font-size: 32px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text);
 }
 p{
     color: var(--muted);
@@ -132,14 +136,14 @@ p{
     box-sizing: border-box;
     transition: 0.25s ease;
     border: 1px solid var(--border);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.28);
+    box-shadow: 0 16px 30px rgba(15,23,42,0.12);
 }
 .about-col:hover{
     transform: translateY(-4px);
-    border-color: rgba(56,189,248,0.3);
+    border-color: rgba(14,165,233,0.35);
 }
 .about-col h3{
-  color: #fff;
+  color: var(--text);
   margin-bottom: 8px;
 }
 .faq{
@@ -154,23 +158,23 @@ p{
     padding: 20px 16px;
     box-sizing: border-box;
     border: 1px solid var(--border);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.22);
-    color: #fff;
+    box-shadow: 0 16px 30px rgba(15,23,42,0.12);
+    color: var(--text);
 }
 
 /* CSS for Contact US */
 .con{
     margin: 80px auto;
     width: 90%;
-    background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(56,189,248,0.18));
+    background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(14,165,233,0.14));
     border-radius: 16px;
     text-align: center;
     padding: 60px 20px;
     border: 1px solid var(--border);
-    box-shadow: 0 12px 26px rgba(0,0,0,0.25);
+    box-shadow: 0 12px 26px rgba(15,23,42,0.12);
 }
 .con h1{
-    color: #fff;
+    color: var(--text);
     margin-bottom: 24px;
     padding: 0;
 }
@@ -180,7 +184,7 @@ p{
     width: 100%;
     text-align: center;
     padding: 30px 0;
-    background-color: #0f172a;
+    background-color: #eef2ff;
     color: var(--muted);
     border-top: 1px solid var(--border);
 }
@@ -188,16 +192,16 @@ p{
     margin-bottom: 12px;
     margin-top: 10px;
     font-weight: 700; 
-    color: #fff;
+    color: var(--text);
 }
 
 /* CSS for aboutus page */
 .sub-header{
     height: 50vh;
     width: 100%;
-    background: linear-gradient(145deg, #0b1220, #0f1c31);
+    background: linear-gradient(145deg, #f8fbff, #e9f3ff);
     text-align: center;
-    color: #fff;
+    color: var(--text);
     display: grid;
     place-items: center;
 }
@@ -223,7 +227,7 @@ p{
 
 .abt-col h1{
     padding-top: 0;
-    color: #fff;
+    color: var(--text);
 }
 
 .abt-col p{

@@ -4,12 +4,13 @@ body {
     margin: 0;
     padding: 0;
     height: 100%; /* Ensure the body takes up the full height of the viewport */
+    background: #f5f7fb;
 }
 
 /* Header Styles */
 #header {
-    background-color: #313866; 
-    color: #fff;
+    background-color: #e7efff; 
+    color: #0f172a;
     padding: 2px;
     text-align: center;
 }
@@ -24,9 +25,9 @@ body {
 /* Sidebar Styles */
 #sidebar {
     width: 200px;
-    background-color: #504099;
+    background-color: #f3f6ff;
     padding: 20px;
-    color: #fff;
+    color: #0f172a;
     height: -webkit-fill-available;; /* Make the sidebar take up full height */
     overflow-y: auto; /* Add scroll if the content is too long */
 }
@@ -43,7 +44,7 @@ body {
 
 #sidebar ul li a {
     text-decoration: none;
-    color: #fff;
+    color: #0f172a;
     font-weight: bold;
     display: block; /* Make links block elements */
     padding: 10px; /* Add padding to links */
@@ -51,7 +52,7 @@ body {
 }
 
 #sidebar ul li a:hover {
-    color: #FE7BE5; /* Highlight on hover */
+    color: #0ea5e9; /* Highlight on hover */
 }
 
 /* Style the Logout link separately */
@@ -64,14 +65,14 @@ body {
 
 #logout a {
     text-decoration: none;
-    color: #fff;
+    color: #0f172a;
     font-weight: bold;
     display: block; /* Make it a block element */
     padding: 10px; /* Add padding to the Logout link */
 }
 
 #logout a:hover {
-    color: #FE7BE5; /* Highlight on hover */
+    color: #0ea5e9; /* Highlight on hover */
 }
 
 /* Content Styles */
@@ -85,8 +86,8 @@ body {
 
 /* Footer Styles */
 #footer {
-    background-color: #313866;
-    color: #fff;
+    background-color: #e7efff;
+    color: #0f172a;
     padding: 20px;
     text-align: center;
 }

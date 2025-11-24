@@ -13,22 +13,22 @@ h1 {
   font-size: 26px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #e8f1ff;
+  color: #0f172a;
   padding: 20px 0 10px;
 }
 
 .table-wrapper {
   padding: 22px;
   margin: 0 0 40px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 28px rgba(15,23,42,0.12);
   height: fit-content;
   display: flexbox;
   justify-content: space-between;
   font-size: 18px;
   width: 100%;
-  background: #1f2937;
+  background: #ffffff;
   border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(15,23,42,0.08);
   backdrop-filter: blur(2px);
   overflow-x: auto;
 }
@@ -43,7 +43,7 @@ h1 {
   max-width: 100%;
   min-width: 720px;
   white-space: nowrap;
-  background: #111827;
+  background: #f8fafc;
   overflow: hidden;
 }
 
@@ -54,25 +54,25 @@ h1 {
 }
 
 .fl-table td {
-  border-right: 1px solid rgba(255,255,255,0.04);
+  border-right: 1px solid rgba(15,23,42,0.06);
   font-size: 15px;
-  color: #e8f1ff;
+  color: #0f172a;
 }
 
 .fl-table thead th {
-  color: #0b1b2c;
-  background: #e5e7eb;
+  color: #0f172a;
+  background: #e7efff;
   font-size: 14px;
   letter-spacing: 0.6px;
 }
 
 .fl-table thead th:nth-child(odd) {
-  color: #0b1b2c;
-  background: #d1d5db;
+  color: #0f172a;
+  background: #dbeafe;
 }
 
 .fl-table tr:nth-child(even) {
-  background: rgba(255,255,255,0.02);
+  background: #ffffff;
 }
 
 .fl-table tr.clickable {
@@ -81,7 +81,7 @@ h1 {
 }
 
 .fl-table tr.clickable:hover {
-  background: rgba(56,189,248,0.08);
+  background: #e0f2fe;
   transform: translateY(-1px);
 }
 
@@ -108,8 +108,18 @@ input[type="submit"]:hover {
 }
 
 input[type="submit"]:focus {
-  outline: 2px solid rgba(96,165,250,0.4);
+  outline: 2px solid rgba(14,165,233,0.4);
   outline-offset: 2px;
+}
+
+.photo-thumb {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: #f8fafc;
+  box-shadow: 0 6px 12px rgba(15,23,42,0.08);
 }
 
 .button-row {

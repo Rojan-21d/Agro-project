@@ -1,15 +1,15 @@
 :root {
-  --admin-bg: #0b1220;
-  --admin-panel: #0f1c31;
-  --admin-card: #111f38;
+  --admin-bg: #f5f7fb;
+  --admin-panel: #ffffff;
+  --admin-card: #ffffff;
   --admin-accent: #22c55e;
-  --admin-accent-2: #38bdf8;
+  --admin-accent-2: #0ea5e9;
   --admin-danger: #ef4444;
-  --admin-text: #e5ecf8;
-  --admin-muted: #94a3b8;
-  --admin-border: rgba(255,255,255,0.08);
+  --admin-text: #0f172a;
+  --admin-muted: #4b5563;
+  --admin-border: rgba(15,23,42,0.08);
   --admin-radius: 14px;
-  --admin-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  --admin-shadow: 0 20px 40px rgba(15,23,42,0.12);
   --admin-font: "Manrope","Segoe UI",sans-serif;
 }
 
@@ -21,7 +21,7 @@
 }
 
 body {
-    background: linear-gradient(155deg, #0b1220, #0f1c31);
+    background: linear-gradient(155deg, #f8fbff, #eef2ff);
     color: var(--admin-text);
 }
 
@@ -67,7 +67,7 @@ body {
 .segment{
     display: inline-flex;
     gap: 8px;
-    background: #0b1627;
+    background: #e2e8f0;
     padding: 6px;
     border-radius: 999px;
     border: 1px solid var(--admin-border);
@@ -91,12 +91,12 @@ body {
 
 .segment button:hover{
     transform: translateY(-1px);
-    background: rgba(56,189,248,0.08);
+    background: #dbeafe;
 }
 
 .segment button.selected {
     background: var(--admin-text);
-    color: #0b1220;
+    color: #f8fbff;
     border-color: transparent;
 }
 
@@ -121,7 +121,7 @@ table{
 
 th{
     padding: 12px;
-    background-color: #13233d;
+    background-color: #e7efff;
     font-size: 13px;
     letter-spacing: 0.4px;
 }
@@ -164,7 +164,7 @@ td{
   
 .approveBtn button{
     background: var(--admin-accent-2);
-    color: #0b1220;
+    color: #0f172a;
 }
 
 .approveBtn button:hover,
@@ -175,16 +175,16 @@ td{
 
 .deleteBtn button{
     background: var(--admin-danger);
-    color: #0b1220;
+    color: #0f172a;
 }
 
 table  tr:nth-child(odd){
-    background: rgba(255,255,255,0.02);
+    background: #f8fafc;
 }
 
 table tr:hover{
     transform: translateY(-1px);
-    background: rgba(56,189,248,0.05);
+    background: #e0f2fe;
 }
 
 @media (max-width: 900px) {

@@ -105,6 +105,11 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         });
     }
 }
+
+function truncateText($text, $limit = 30) {
+    $text = trim($text ?? '');
+    return (strlen($text) > $limit) ? substr($text, 0, $limit) . '…' : $text;
+}
 ?>
 <!-- WHERE farmer_id = '" . $_SESSION['id'] . "' -->
 <link rel="stylesheet" href="../css/table.css">
@@ -117,23 +122,37 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         <table class="fl-table">
             <tbody>
                 <tr>
-                    <th width=10% >SN</th>
-                    <th width=20% >Farmer Name</th>
-                    <th width=20% >Title</th>
-                    <th width=30% >Description</th>
-                    <th width=10% >Priority</th>
-                    <th width=15% >Suggested Counsellor</th>
-                    <th width=10% >Action</th>
+                    <th width=6% >SN</th>
+                    <th width=18% >Farmer Name</th>
+                    <th width=16% >Title</th>
+                    <th width=12% >Photo</th>
+                    <th width=22% >Description</th>
+                    <th width=8% >Priority</th>
+                    <th width=12% >Suggested Counsellor</th>
+                    <th width=12% >Action</th>
                 </tr>
                 <?php if (!empty($predicaments)) { // Check if $result is set
                     $i = 1;
                     foreach ($predicaments as $row) { 
+                        $photoUrl = $row['photo_path'] ?? '';
+                        if (!empty($photoUrl) && strpos($photoUrl, 'http') !== 0 && $photoUrl[0] !== '/') {
+                            $photoUrl = '../' . ltrim($photoUrl, '/');
+                        }
                         ?>
-                        <tr>
+                        <tr class="clickable" data-href="predicament_detail.php?pid=<?php echo $row['pid']; ?>">
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $row['farmer_name']; ?></td>
                             <td><?php echo $row['title']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td>
+                                <?php if (!empty($row['photo_path'])) { ?>
+                                    <a href="<?php echo htmlspecialchars($photoUrl); ?>" target="_blank" rel="noopener">
+                                        <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="Predicament photo" class="photo-thumb">
+                                    </a>
+                                <?php } else { ?>
+                                    &mdash;
+                                <?php } ?>
+                            </td>
+                            <td><?php echo htmlspecialchars(truncateText($row['description'])); ?></td>
                             <td><?php echo $row['priority_score']; ?></td>
                             <td>
                                 <?php
@@ -167,3 +186,20 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         </table>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        document.querySelectorAll('tr.clickable').forEach(function(row){
+            row.addEventListener('click', function(e){
+                if (e.target.closest('form') || ['INPUT','BUTTON','A','SELECT','OPTION','LABEL'].includes(e.target.tagName)) {
+                    return;
+                }
+                const href = row.getAttribute('data-href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+            row.style.cursor = 'pointer';
+        });
+    });
+</script>

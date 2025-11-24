@@ -1,14 +1,26 @@
 
+:root{
+  --bg: #f5f7fb;
+  --panel: #eef2ff;
+  --text: #0f172a;
+  --muted: #4b5563;
+  --accent: #22c55e;
+  --border: rgba(15,23,42,0.08);
+  --font: "Manrope","Segoe UI",sans-serif;
+}
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
+  font-family: var(--font);
 }
 
 body{
-   background-color: #f3f5f9;
+   background-color: var(--bg);
+   color: var(--text);
 }
 
 .wrapper{
@@ -19,37 +31,39 @@ body{
 .wrapper .sidebar{
   width: 200px;
   height: 100vh;
-  background: #4b4276;
+  background: var(--panel);
   padding: 30px 0px;
-  /* position: fixed; */
+  border-right: 1px solid var(--border);
+  box-shadow: 8px 0 18px rgba(15,23,42,0.06);
 }
 
 .wrapper .sidebar h1{
-  color: #fff;
+  color: var(--text);
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 30px;
+  letter-spacing: 1px;
 }
 
 .wrapper .sidebar ul li{
   padding: 15px;
-  border-bottom: 1px solid #bdb8d7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid transparent;
   list-style: none;
 }    
 
 .wrapper .sidebar ul li a{
-  color: #bdb8d7;
+  color: var(--muted);
   display: block;
+  font-weight: 700;
 }
 
 .wrapper .sidebar ul li:hover{
-  background-color: #594f8d;
+  background-color: #e2e8f0;
 }
     
 .wrapper .sidebar ul li:hover a{
-  color: #fff;
+  color: var(--text);
 }
  
 /* .wrapper .main_content{

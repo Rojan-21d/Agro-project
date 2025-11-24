@@ -19,10 +19,24 @@ if ($conn->connect_error) {
 // Delete record
 if (isset($_POST['delete'])) {
     $id = intval($_POST['pid']);
+    $photoPath = null;
+
+    $photoStmt = $conn->prepare("SELECT photo_path FROM predicament WHERE pid = ? AND farmer_id = ?");
+    $photoStmt->bind_param("ii", $id, $_SESSION['id']);
+    $photoStmt->execute();
+    $photoRes = $photoStmt->get_result();
+    if ($photoRes && $photoRes->num_rows > 0) {
+        $photoRow = $photoRes->fetch_assoc();
+        $photoPath = $photoRow['photo_path'] ?? null;
+    }
+
     $stmt = $conn->prepare("DELETE FROM predicament WHERE pid = ? AND farmer_id = ?");
     $stmt->bind_param("ii", $id, $_SESSION['id']);
     $result = $stmt->execute();
     if ($result) {
+        if ($photoPath && file_exists(__DIR__ . '/' . $photoPath)) {
+            @unlink(__DIR__ . '/' . $photoPath);
+        }
         echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'success',title:'Deleted',text:'Predicament removed successfully'});}else{Swal.fire({icon:'success',title:'Deleted',text:'Predicament removed successfully'});}});</script>";
     } else {
         echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'error',title:'Error',text:'Could not delete predicament. Please try again.'});}else{Swal.fire({icon:'error',title:'Error',text:'Could not delete predicament. Please try again.'});}});</script>";
@@ -67,12 +81,13 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         <table class="fl-table">
             <tbody>
                 <tr>
-                    <th width=10%>SN</th>
-                    <th width=25%>Title</th>
-                    <th width=45%>Description</th>
-                    <th width=10%>Submitted Date</th>
-                    <th width=10%>Priority</th>
-                    <th width=26%>Action</th>
+                    <th width=8%>SN</th>
+                    <th width=22%>Title</th>
+                    <th width=14%>Photo</th>
+                    <th width=28%>Description</th>
+                    <th width=12%>Submitted Date</th>
+                    <th width=8%>Priority</th>
+                    <th width=18%>Action</th>
                 </tr>
                 <?php if (!empty($predicaments)) { // Check if $result is set
                     $i = 1;
@@ -80,6 +95,15 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                         <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $row['title']; ?></td>
+                            <td>
+                                <?php if (!empty($row['photo_path'])) { ?>
+                                    <a href="<?php echo htmlspecialchars($row['photo_path']); ?>" target="_blank" rel="noopener">
+                                        <img src="<?php echo htmlspecialchars($row['photo_path']); ?>" alt="Predicament photo" class="photo-thumb">
+                                    </a>
+                                <?php } else { ?>
+                                    &mdash;
+                                <?php } ?>
+                            </td>
                             <td><?php echo $row['description']; ?></td>
                             <td><?php echo $row['submitted_date']; ?></td>
                             <td><?php echo $row['priority_score']; ?></td>
