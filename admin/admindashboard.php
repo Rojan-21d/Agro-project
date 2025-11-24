@@ -8,9 +8,9 @@
 </head>
 <body>
 <nav class="adm-header">
-    <!-- <a href="adminpanel.php"> -->
+    <a href="adminpanel.php">
         <img class="logo" src="../img/6835119.png" alt="agrocouncil">
-    <!-- </a> -->
+    </a>
     <p align="center">Admin Panel</p>
     <a href="adminlogout.php">Logout</a>
 </nav>

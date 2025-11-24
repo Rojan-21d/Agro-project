@@ -79,16 +79,21 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
 ?>
 
 <div class="admin-main">
-    <div class="head-table">
-    <form action="?selected=farmer" method="POST">
-        <button type="submit" name="farmer" class="<?php echo $farmerSelected; ?>">Farmer</button>
-    </form>
-    <form action="?selected=counsellor" method="POST">
-    <button type="submit" name="counsellor" class="<?php echo $counsellorSelected; ?>">Counsellor</button>
-    </form>
-    <form action="?selected=guidelines" method="POST">
-        <button type="submit" name="guidelines" class="<?php echo $guidelinesSelected; ?>">Guidelines</button>
-    </form>
+    <div class="admin-toolbar">
+        <div class="admin-toolbar__copy">
+            <p class="muted">Welcome to Agro Council Admin Site.</p>
+        </div>
+        <div class="segment">
+            <form action="?selected=farmer" method="POST">
+                <button type="submit" name="farmer" class="<?php echo $farmerSelected; ?>">Farmer</button>
+            </form>
+            <form action="?selected=counsellor" method="POST">
+                <button type="submit" name="counsellor" class="<?php echo $counsellorSelected; ?>">Counsellor</button>
+            </form>
+            <form action="?selected=guidelines" method="POST">
+                <button type="submit" name="guidelines" class="<?php echo $guidelinesSelected; ?>">Guidelines</button>
+            </form>
+        </div>
     </div>
 
     <div class="table-container">
@@ -112,7 +117,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
                             echo "<th>" . strtoupper($column) . "</th>";
                         }
                     }        
-                    echo "<th width= 10%1>ACTION</th>";
+                    echo "<th width= 14%>ACTION</th>";
                     echo "</tr>";
 
                     $i = 1;
@@ -127,28 +132,25 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id
                             }
                         }
                         echo "<td class='td-center'>";
-                        
-                        // Display status
-                        // Add approval button
+                        echo "<div class='button-row'>";
+                        // Add approval button when pending
                         if (isset($row['status']) && $row['status'] === 'Pending') {
-                        echo "<form action='' method='post' class='approveBtn'>
-                        <input type='hidden' name='action' value='approve'>
-                        <input type='hidden' name='id' value='" . $id . "'>
-                        <input type='hidden' name='approveTable' value='" . $table . "'>
-                        <button type='submit'>Approve</button>
-                    </form>";
-                    }
+                            echo "<form action='' method='post' class='approveBtn'>
+                                    <input type='hidden' name='action' value='approve'>
+                                    <input type='hidden' name='id' value='" . $id . "'>
+                                    <input type='hidden' name='approveTable' value='" . $table . "'>
+                                    <button type='submit'>Approve</button>
+                                </form>";
+                        }
 
-                        echo "</td>";
-                        
-                        echo "<td class='td-center'>
-                            <form action='' method='post' class='deleteBtn' onsubmit=\"confirmDelete(event)\">
+                        echo "<form action='' method='post' class='deleteBtn' onsubmit=\"confirmDelete(event)\">
                                 <input type='hidden' name='action' value='delete'>
                                 <input type='hidden' name='id' value='" . $id . "'>
                                 <input type='hidden' name='deleteTable' value='" . $table . "'>
                                 <button type='submit'>Delete</button>
-                            </form>
-                            </td>";
+                              </form>";
+                        echo "</div>";
+                        echo "</td>";
                         
                         echo "</tr>";
                         

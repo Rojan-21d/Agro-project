@@ -48,7 +48,7 @@
             omnis exercitationem officia vitae consequatur rerum<br>ea tenetur quam iure
             recusandae accusamus hic unde totam impedit modi, dolor dolorem.</p>
             <div class="cp-right">
-                <p>&copy; 2023 AGROCOUNCIL, All Rights Reserved.</p>
+                <p>&copy; 2025 AGROCOUNCIL, All Rights Reserved.</p>
             </div>
             
 

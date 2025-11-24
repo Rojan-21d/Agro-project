@@ -21,20 +21,18 @@ if (isset($_POST['delete'])) {
     $sql = "DELETE FROM guidelines WHERE gid = '$id'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>alert('Record Deleted Successfully');</script>";
+        echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'success',title:'Deleted',text:'Guideline removed successfully'});}else{Swal.fire({icon:'success',title:'Deleted',text:'Guideline removed successfully'});}});</script>";
     } else {
-        echo "Error: " . $conn->error;
+        echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'error',title:'Error',text:'Could not delete guideline. Please try again.'});}else{Swal.fire({icon:'error',title:'Error',text:'Could not delete guideline. Please try again.'});}});</script>";
     }
 }
 
 // Fetch Guidelines
 if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
-    $sql = "SELECT * FROM farmer
-    INNER JOIN predicament ON farmer.id = predicament.farmer_id
-    INNER JOIN guidelines ON predicament.pid = guidelines.predicament_id
-    WHERE counsellor_id = '" . $_SESSION['id'] . "'";
-
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT g.gid, g.title AS guideline_title, g.description, g.submitted_date, f.name AS farmer_name, p.title AS predicament_title FROM farmer f INNER JOIN predicament p ON f.id = p.farmer_id INNER JOIN guidelines g ON p.pid = g.predicament_id WHERE g.counsellor_id = ?");
+    $stmt->bind_param("i", $_SESSION['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 }
 ?>
 
@@ -51,12 +49,11 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
             <tbody>
                 <tr>
                     <th>SN</th>
-                    <th>Counsellor ID</th>
-                    <th>Title</th>
+                    <th>Farmer</th>
+                    <th>Predicament</th>
+                    <th>Guideline Title</th>
                     <th>Description</th>
                     <th>Submitted Date</th>
-                    <th>Predicament ID</th>
-                    <th>Farmer ID</th>
                     <th>Action</th>
                 </tr>
                 <?php if (isset($result) && $result->num_rows > 0) { // Check if $result is set
@@ -64,23 +61,25 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                     while ($row = $result->fetch_assoc()) { ?>
                         <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $row['counsellor_id']; ?></td>
-                            <td><?php echo $row['title']; ?></td>
+                            <td><?php echo $row['farmer_name']; ?></td>
+                            <td><?php echo $row['predicament_title']; ?></td>
+                            <td><?php echo $row['guideline_title']; ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td><?php echo $row['submitted_date']; ?></td>
-                            <td><?php echo $row['predicament_id']; ?></td>
-                            <td><?php echo $row['farmer_id']; ?></td>
 
-                            <td>
-                                <form method="post" action="edit_guidelines.php">
-                                    <input type="hidden" value="<?php echo $row['gid']; ?>" name="gid" />
-                                    <input type="submit"  value="Update" name="edit_guidelines" />
-                                </form>
+                            <td class="action-cell">
+                                <div class="button-row">
+                                    <form method="post" action="edit_guidelines.php">
+                                        <input type="hidden" value="<?php echo $row['gid']; ?>" name="gid" />
+                                        <input type="submit"  value="Update" name="edit_guidelines" />
+                                    </form>
 
-                                <form method="post" action="guidelines_table.php">
-                                    <input type="hidden" value="<?php echo $row['gid']; ?>" name="gid" />
-                                    <input type="submit" value="Delete" name="delete" />
-                                </form>
+                                    <form method="post" action="guidelines_table.php" onsubmit="confirmDelete(event)">
+                                        <input type="hidden" value="<?php echo $row['gid']; ?>" name="gid" />
+                                        <input type="hidden" name="delete" value="1" />
+                                        <input type="submit" value="Delete" />
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     <?php }
@@ -94,4 +93,7 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         <?php } ?>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/confirmationSA.js"></script>
 

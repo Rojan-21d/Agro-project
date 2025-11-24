@@ -19,7 +19,7 @@ session_start();
 
 // Include File
 include('layout/header.php');
-// include('layout/left.php');
+include('layout/left.php');
 
 // Database Connection
 $conn = new mysqli("localhost", "root", "", "agro_council");
@@ -29,10 +29,10 @@ if ($conn->connect_error) {
 
 // Add farm when the form is submitted
 if (isset($_POST['submit'])) {
-    $farmer_id = $_POST['farmerid'];
-    $farmarea = $_POST['farmarea'];
-    $farmunit = $_POST['farmunit'];
-    $farmtype = $_POST['farmtype'];
+    $farmer_id = $_SESSION['id'];
+    $farmarea = trim($_POST['farmarea'] ?? '');
+    $farmunit = trim($_POST['farmunit'] ?? '');
+    $farmtype = trim($_POST['farmtype'] ?? '');
 
     $errors = [];
   // Check if any of the required fields is empty
@@ -49,9 +49,10 @@ if (isset($_POST['submit'])) {
         </script>
         <?php
     } else {
-        // Insert farm data into the database
-        $sql = "INSERT INTO farm (farm_area, farm_unit, farm_type, farmer_id) VALUES ('$farmarea', '$farmunit', '$farmtype', '$farmer_id')";
-        $result = $conn->query($sql);
+        // Insert farm data into the database with ownership check
+        $stmt = $conn->prepare("INSERT INTO farm (farm_area, farm_unit, farm_type, farmer_id) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("sssi", $farmarea, $farmunit, $farmtype, $farmer_id);
+        $result = $stmt->execute();
         if ($result) {
             ?>
             <script>
@@ -69,14 +70,15 @@ if (isset($_POST['submit'])) {
             <?php
 
         } else {
-            // echo "Error: " . $conn->error; // Display database error
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Error: <?php echo $conn->error; ?>',
-                    });
-                  </script>";
+            ?>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error adding farm. Please try again.',
+                });
+            </script>
+            <?php
         }
         }
     }
@@ -105,8 +107,10 @@ if (isset($_POST['submit'])) {
                     <input type="text" name="farmtype" /><br>
                 </div>
                 <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="farmerid">
-                <input type="submit" value="Add Farm" name="submit" />
-                <a href="home.php">Back</a>
+                <div class="actions-inline">
+                    <input type="submit" value="Add Farm" name="submit" />
+                    <a class="ghost-btn" href="home.php">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title> 
+    <link rel="stylesheet" href="css/hstyle.css">
+</head>
+<body>
+    <section class="header">
+       <nav>
+        <a href="index.php"><img src="img/6835119.png" alt="agrocouncil"></a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="index.php">HOME</a></li>
+                <li><a href="login.php">LOGIN</a></li>
+                <li><a href="registration.php">SIGNUP</a></li>
+            </ul>
+        </div>
+       </nav>
+       <div class="text-box">
+        <h1>WELCOME TO AGRICULTURE COUNSELLING SYSTEM - AGROCOUNCIL</h1>
+        <p>We connect farmers with vetted counsellors to solve real field problems—soil, pests, water, and markets—fast. Get practical guidance, keep records, and grow with confidence.</p>
+            <a href="registration.php" class="l-btn">Join as Farmer</a>
+            <a href="registration.php" class="l-btn" style="margin-left:10px;">Join as Counsellor</a>
+       </div>
+    </section>
+
+    <!-- About us -->
+    <section class="about-us">
+        <h1>About Us</h1>
+        <p>AgroCouncil is a platform built for smallholders and agri-professionals. We bridge the gap between farmers seeking timely advice and counsellors who provide actionable, localised guidance.</p>
+            <div class="row">
+                <div class="about-col">
+                    <h3>Quick Support</h3>
+                    <p>Log your predicaments and get responses aligned to your crop, soil, and region—no generic advice.</p>
+                </div>
+                <div class="about-col">
+                    <h3>Trusted Experts</h3>
+                    <p>Counsellors are verified by the admin team and approved before they can respond.</p>
+                </div>
+                <div class="about-col">
+                    <h3>Simple Records</h3>
+                    <p>Keep farm details, predicaments, and guidelines in one place so you can track what worked.</p>
+                </div>
+            </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <h1>How It Works</h1>
+        <p>Answers to the most common questions about AgroCouncil.</p>
+        <div class="row">
+            <div class="faq-col">
+                <h3>Who can join?</h3>
+                <p>Farmers sign up to post predicaments; counsellors sign up to provide guidance. Admin approves counsellors before they can reply.</p>
+            </div>
+            <div class="faq-col">
+                <h3>What does it cost?</h3>
+                <p>Registration is free. The focus is on rapid knowledge sharing between farmers and counsellors.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact us -->
+    <section class="con">
+        <h1>Need Help Getting Started?</h1>
+        <p style="color:#e5e7eb;">Have questions about joining or using AgroCouncil? Reach out and we’ll set you up.</p>
+        <a href="mailto:agrocouncil101@gmail.com" class="l-btn">CONTACT US</a>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h4>About us</h4>
+        <p>AgroCouncil connects farmers and counsellors to solve on-ground problems with timely, practical advice.</p>
+            <div class="cp-right">
+                <p>&copy; 2025 AGROCOUNCIL, All Rights Reserved.</p>
+            </div>
+            
+
+    </section>
+</body>
+</html>
+

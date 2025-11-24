@@ -1,80 +1,105 @@
 *{
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+:root {
+    --bg: #0f172a;
+    --panel: #111827;
+    --accent: #22c55e;
+    --accent-2: #38bdf8;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --card: #1f2937;
+    --border: rgba(255,255,255,0.06);
+    --shadow: 0 10px 28px rgba(0,0,0,0.3);
+    --radius: 12px;
+    --font: "Manrope", "Segoe UI", sans-serif;
+}
+
 body{
-    /* background-color: aquamarine; */
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 100vh;
 }
 /* CSS for header section */
 #header {
     position: sticky;
     top: 0;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #00636E;
+    background: var(--panel);
+    backdrop-filter: blur(2px);
     color: #fff;
-    padding: 10px;
-    height: 35px;
+    padding: 12px 18px;
+    height: 60px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04);
 }
 
 #logo img {
-    height: 35px;
-    padding-left: 30%;
+    height: 38px;
+    padding-left: 10px;
 }
 
 #banner {
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
 }
 
 #profile a {
     text-decoration: none;
-    color: #fff;
-    padding: 5px 10px;
+    color: #0f172a;
+    padding: 8px 12px;
     margin-left: 10px;
-    border: 1px solid #fff;
-    border-radius: 3px;
+    border-radius: 10px;
+    background: var(--accent);
+    font-weight: 700;
+    box-shadow: none;
+    transition: transform 0.12s ease, opacity 0.15s ease;
 }
 
 #profile a:hover {
-    background-color: #f44336;
-    color: #fff;
+    transform: translateY(-1px);
+    opacity: 0.9;
 }
 
 
 /* CSS for main section */
 #main {
     display: flex;
-    background-color: #C4F4E7;
-    /* width: 80%; */
+    background: transparent;
 }
 
 /* CSS for sidebar */
 #left {
-  background-color: #39A6B0;
-  width: 20%;
-  padding: 20px;
-  height: 100vh;
+  background: var(--panel);
+  width: 22%;
+  padding: 24px;
+  min-height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  /* position: fixed; */
+  gap: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 strong  a {
-  color: #333;
+  color: #e8f1ff;
 }
 
 #left strong {
   color: #fff;
   text-transform: uppercase;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 25px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 #left .ol_ol {
@@ -82,69 +107,42 @@ strong  a {
   padding: 10px;
   flex-grow: 1;
   overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.02);
 }
-
-/* #left .ol_ol li {
-  margin-bottom: 10px;
-  padding: 20px;
-  text-align: center;
-} */
 
 #left .ol_ol li {
-  padding: 15px;
-  border-bottom: 1px solid #bdb8d7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
   list-style: none;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* #left .ol_ol li a {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  display: block;
-} */
+#left .ol_ol li:last-child {
+  border-bottom: none;
+}
 
 #left .ol_ol li a {
-  color: #333;
-  display: block;
+  color: #d8e6f8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  text-decoration: none;
 }
-
-/* #left .ol_ol li a:hover {
-  color: #007bff;
-} */
 
 #left .ol_ol li:hover{
-  background-color: #294D61;
-  border-radius: 20px;
-}
-    
-#left .ol_ol li:hover a{
-  color: #fff;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  transform: translateX(2px);
 }
 
-/* Styles for the right container */
-/* #right { */
-    /* text-align: center; */
-    /* height: 100vh; */
-    /* width: 100%; */
-  /* } */
-  
-  /* Styles for the right wrapper */
-  /* .right_wrapper {
-    display: flex;
-    justify-content: left;
-    padding-left: 10px;
-  }
-   */
-  /* Styles for the index */
-  /* .index strong {
-    color: #555;
-    font-size: 20px;
-    line-height: 1.5;
-    text-align: center;
-  } */
-  
+#left .ol_ol li:hover a{
+  color: #fff;
+  text-decoration: none;
+}
+
 /* CSS for dropdown */
 .dropdown{
   position: relative;
@@ -152,13 +150,13 @@ strong  a {
 }
 
 .dropdown > button{
-  /* width: 170px; */
-  /* height: 60px; */
   border: 0;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 17px;
-  background: #f1f1f1;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 16px;
+  background: rgba(255,255,255,0.08);
+  color: #f7f7f7;
+  padding: 12px;
 }
 
 .dropdown > .content{
@@ -168,13 +166,11 @@ strong  a {
   left: 0;
   width: 100%;
   height: 60px;
-  /* padding: 0 16px; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  text-decoration: underline;
-  /* color: #f7f7f7; */
+  text-decoration: none;
 }
 
 .dropdown > .content > p{
@@ -219,14 +215,14 @@ strong  a {
   display: grid;
   width: 110%;
   padding: 70px 0 6px;
-  border-radius: 6px;
+  border-radius: 10px;
   translate: -50% 0;
   visibility: hidden;
   opacity: 0;
-  scale: 0.85;
-  /* background: linear-gradient(#ea8d8d, #a890fe); */
-  background: #00636E;
-  transition: 0.3s;
+  scale: 0.9;
+  background: linear-gradient(160deg, #132a44, #0c536a);
+  transition: 0.25s;
+  box-shadow: var(--shadow);
 }
 
 .dropdown:hover > .menu{
@@ -241,27 +237,28 @@ strong  a {
   gap: 10px;
   color: #f7f7f7;
   font-size: 14px;
-  padding: 0 24px;
+  padding: 0 20px 8px;
 }
 
 .dropdown > .menu > a > p{
-  color: #333;
-  font-size: 16px;
-  text-decoration: underline;
-  padding: 10px;
+  color: #d8e6f8;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 10px 0;
 }
 
 .dropdown > .menu >a:hover{
-  /* background: rgba(0 0 0 / 10%); */
-    background-color: #C4F4E7;
+    background: rgba(96,165,250,0.08);
 }
 
 /* CSS for footer section */
 #footer {
-    background-color: #f0f0f0;
-    padding: 20px;
+    background: var(--panel);
+    padding: 24px;
     text-align: center;
     margin-top: auto;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
 }
 
 .quick-links ul {
@@ -275,7 +272,7 @@ strong  a {
 
 .quick-links li a {
     text-decoration: none;
-    color: #333;
+    color: #e8f1ff;
 }
 
 .quick-links li a:hover {
@@ -294,7 +291,7 @@ strong  a {
 .copyright {
     margin-top: 20px;
     font-size: 14px;
-    color: #777;
+    color: var(--muted);
 }
 
 
@@ -341,3 +338,4 @@ strong  a {
       font-size: 12px; Adjust copyright font size
   }
 } */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');

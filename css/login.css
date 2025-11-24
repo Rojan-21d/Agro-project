@@ -1,8 +1,20 @@
+:root {
+  --bg: #0b1220;
+  --card: rgba(16, 25, 45, 0.92);
+  --accent: #22c55e;
+  --accent-2: #38bdf8;
+  --text: #e8f1ff;
+  --muted: #9fb3c8;
+  --border: rgba(255,255,255,0.08);
+  --radius: 16px;
+  --shadow: 0 18px 32px rgba(0,0,0,0.35);
+  --font: "Manrope","Segoe UI",sans-serif;
+}
+
 body{
-  background-image: linear-gradient(#55a2d6, 
-  rgba(4,9,30,0.7));
-  /* background-size: cover;
-  background-position: center; */
+  background: radial-gradient(circle at 15% 20%, rgba(56,189,248,0.16), transparent 32%), radial-gradient(circle at 80% 10%, rgba(34,197,94,0.16), transparent 30%), linear-gradient(160deg, #0b1220, #0f1c31);
+  font-family: var(--font);
+  color: var(--text);
 }
 
 /* For Login */
@@ -12,7 +24,7 @@ body{
   align-items: center; 
   height: max-content;
   margin: 0 auto;
-  padding: 100px;
+  padding: 80px 20px;
 }
 /* End */
 
@@ -23,7 +35,7 @@ body{
   align-items: center; 
   height: max-content;
   margin: 0 auto;
-  padding: 24px;
+  padding: 40px 20px;
 }
 /* End */
 
@@ -34,51 +46,7 @@ body{
   align-items: center; 
   height: max-content;
   margin: 0 auto;
-  padding: 170px;
-}
-/* End */
-
-.container {
-  text-align: center;
-  padding: 20px;
-  background-image: linear-gradient(#176B87, rgba(4, 9, 30, 0.7));
-  /* background-color: #176B87; */
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  /* margin: 20px; */
-}
-
-.container h1 {
-  margin-bottom: 20px;
-  font-size: 30px;
-  color: #000;
-  position: relative;
-}
-
-/* For Login */
-.group-login {
-  margin-bottom: 25px;
-}
-
-label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-/* End */
-
-/* For Registration */
-.group-loginn {
-  margin-bottom: 12px;
-}
-
-.labell {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  padding: 120px 20px;
 }
 /* End */
 
@@ -87,14 +55,17 @@ input[type="tel"],
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #0f172a;
+  color: var(--text);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 form a{
   text-decoration: none;
-  color: #45a049;
+  color: var(--accent-2);
 }
 
 form a:hover {
@@ -104,17 +75,17 @@ form a:hover {
 /* button css */
 .button-group {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .button-group button{
   flex-basis: 100%;
-  margin: 20px 0;
+  margin: 12px 0 4px;
   padding: 14px 20px;
-  border-radius: 15px;
+  border-radius: 14px;
   text-align: center;
-  background-color: #01896e;
-  color: #fff;
+  background: var(--accent);
+  color: #0f172a;
   border: none;
   outline: 0;
   cursor: pointer;
@@ -122,12 +93,13 @@ form a:hover {
 
 .button-group button:hover{
   transform: scale(1.03);
+  opacity: 0.92;
 }
 
 /* user selection */
 .user-selects{
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 6px;
   display: flex;
   justify-content: space-between;
   gap: 3%;
@@ -145,25 +117,25 @@ form a:hover {
 }
 
 .user-selects label{
-  border-radius: 50px;
-  padding: 10px 40px;
-  color: #01896e;
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: var(--accent);
   width: 100%;
-  border: 2px solid #01896e;
+  border: 2px solid var(--accent);
   transition: background 0.5s;
   cursor: pointer;
 }
 
 .user-selects label:hover{
   color: #fff;
-  background-color: #01896e;
+  background: var(--accent);
   transform: scale(1.03);
 }
 
 .farmer-part input[type="radio"]:checked +label,
 .counsellor-part input[type="radio"]:checked +label{
-  background-color: #01896e;
-  border-color: #01896e;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 /* end */
@@ -172,12 +144,12 @@ form a:hover {
   /* background-color: #474846; */
   color: #ff8482;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 7px;
+  margin-bottom: 8px;
+  border-radius: 10px;
 }
 
 span{
-  color: #fff;
+  color: var(--muted);
 }
 
 /* Forget Password */
@@ -190,4 +162,103 @@ span{
 
 .group-login .labelll input[type="email"]{
   width: 50%
+}
+
+/* New auth layout */
+.auth-shell{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px 60px;
+  background: none;
+}
+
+.auth-card{
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 26px 30px;
+}
+
+.auth-header .eyebrow{
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.auth-header h1{
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 28px;
+}
+
+.auth-header .helper{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.auth-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.field{
+  text-align: left;
+}
+
+.field label{
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.field input{
+  width: 100%;
+}
+
+.pill-group{
+  margin-top: 4px;
+}
+
+.alert{
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin: 10px 0;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(239,68,68,0.12);
+  color: #fecaca;
+  text-align: left;
+}
+
+.helper{
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.helper.center{
+  text-align: center;
+  margin-top: 6px;
+}
+
+.links-row{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+}
+
+.muted-link{
+  color: var(--muted);
+}
+
+.muted-link:hover{
+  color: #fff;
 }

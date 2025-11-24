@@ -12,7 +12,9 @@
 <body>
     <div id="header">
         <div id="logo">
-            <img src="img/6835119.png" alt="agrocouncil">
+            <a href="home.php">
+                <img src="img/6835119.png" alt="agrocouncil">
+            </a>
         </div>
         <div id="banner"> WELCOME TO AGROCOUNCIL </div>
         <div id="profile">

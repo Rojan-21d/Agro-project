@@ -125,32 +125,37 @@ if(isset($_POST['signup'])){
 
 <!-- <script src="validation.js"></script> -->
 <link rel="stylesheet" href="css/sweetAlert.css">
-<div class="logg">
-    <div class="container">
-        <h1>Registration Form</h1>
-            <form method="post" action="registration.php" autocomplete="off">
-        <link rel="stylesheet" href="css/login.css">
-            <div class="group-loginn">
-                <label for="name" class="labell">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+<link rel="stylesheet" href="css/login.css">
+
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-header">
+            <p class="eyebrow">Create account</p>
+            <h1>Join AgroCouncil</h1>
+            <p class="helper">Farmers get fast guidance; counsellors share expertise. Choose your role below.</p>
+        </div>
+        <form method="post" action="registration.php" autocomplete="off" class="auth-form">
+            <div class="field">
+                <label for="name" class="labell">Name</label>
+                <input type="text" id="name" name="name" placeholder="Full name" required>
             </div>
-            <div class="group-loginn">
-                <label for="address" class="labell">Address:</label>
-                <input type="text" id="address" name="address" placeholder="Enter your address" required>
+            <div class="field">
+                <label for="address" class="labell">Address</label>
+                <input type="text" id="address" name="address" placeholder="City / District" required>
             </div>
-            <div class="group-loginn">
-                <label for="mobile" class="labell">Mobile:</label>
-                <input type="tel" id="mobile" name="mobile" placeholder="Enter your number" required>
+            <div class="field">
+                <label for="mobile" class="labell">Mobile</label>
+                <input type="tel" id="mobile" name="mobile" placeholder="10-digit number" required>
             </div>
-            <div class="group-loginn">
-                <label for="email" class="labell">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <div class="field">
+                <label for="email" class="labell">Email</label>
+                <input type="email" id="email" name="email" placeholder="name@example.com" required>
             </div>
-            <div class="group-loginn">
-                <label for="password" class="labell">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password "required>
+            <div class="field">
+                <label for="password" class="labell">Password</label>
+                <input type="password" id="password" name="password" placeholder="8-16 characters" required>
             </div>
-            <div class="user-selects">
+            <div class="user-selects pill-group">
                 <div class="farmer-part">
                     <input type="radio" name="userselects" id="farmer" value="farmer" checked>
                     <label for="farmer">Farmer</label>
@@ -161,10 +166,10 @@ if(isset($_POST['signup'])){
                 </div>
             </div>
             <div class="button-group">
-                <button type="submit" name="signup" value="signup">SIGNUP</button>
+                <button type="submit" name="signup" value="signup">Create account</button>
             </div>
-            <span>Have a account? <a href="login.php">Click here!!!</a></span>
-            </form>
+            <p class="helper center">Already registered? <a href="login.php">Sign in</a></p>
+        </form>
     </div>
 </div>
 

@@ -90,24 +90,31 @@ if (isset($_POST['login'])) {
 
 <link rel="stylesheet" href="css/login.css">
 
-<div class="log">
-    <div class="container">
-        <h1>Agrocouncil Login</h1>
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-header">
+            <p class="eyebrow">Sign in</p>
+            <h1>Welcome back</h1>
+            <p class="helper">Access your AgroCouncil dashboard as a farmer or counsellor.</p>
+        </div>
+
         <?php if (isset($_GET['error'])) { ?>
-        <div class="error-message">
-            Email or Password Invalid!
+        <div class="alert error">
+            Email or password is invalid.
         </div>
         <?php } ?>
-        <form method="post" action="login.php" autocomplete="off">
-            <div class="group-login">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <form method="post" action="login.php" autocomplete="off" class="auth-form">
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="name@example.com" required>
             </div>
-            <div class="group-login">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password "required>
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
-            <div class="user-selects">
+
+            <div class="user-selects pill-group">
                 <div class="farmer-part">  
                     <input type="radio" name="userselects" id="farmer" value="farmer" checked>
                     <label for="farmer">Farmer</label>
@@ -118,11 +125,14 @@ if (isset($_POST['login'])) {
                 </div> 
             </div>
 
-            <span>Forgot Password? <a href="forgetpassword/forgetpwd.php">Click Here!</a></span>
-            <div class="button-group">
-                <button type="submit" name="login" value="login">LOGIN</button>
+            <div class="links-row">
+                <a class="muted-link" href="forgetpassword/forgetpwd.php">Forgot password?</a>
             </div>
-            <span>Don't have an account? <a href="registration.php">Register Here!!!</a></span>
+
+            <div class="button-group">
+                <button type="submit" name="login" value="login">Sign in</button>
+            </div>
+            <p class="helper center">Don’t have an account? <a href="registration.php">Create one</a></p>
         </form>
     </div>
 </div>

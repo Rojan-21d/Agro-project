@@ -1,7 +1,17 @@
+:root {
+    --admin-bg: #0b1220;
+    --admin-card: #111f38;
+    --admin-accent: #22c55e;
+    --admin-text: #e5ecf8;
+    --admin-border: rgba(255,255,255,0.08);
+    --admin-font: "Manrope","Segoe UI",sans-serif;
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--admin-font);
 }
 html{
     scroll-behavior: smooth;
@@ -17,15 +27,15 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #39A6B0;
-    padding: .3rem 3rem;
+    background: #0f1c31;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .logo {
-    width: 35px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-left: 10px; /* Adjust the margin as needed */
-    
+    width: 40px;
+    height: auto;
+    margin-left: 6px;
 }
 
 .nav__links img{
@@ -34,33 +44,25 @@ nav{
 }
 
 p{
-    font-size: 35px;
-    font-weight: bold;
-    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--admin-text);
+    letter-spacing: 0.3px;
 }
-
-
-/* Footer */
-footer {
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-  }
 
 .adm-header a {
     text-decoration: none;
-    color: #fff;
-    background-color: #294D61;
-    padding: 5px 10px;
+    color: #0f172a;
+    background-color: var(--admin-accent);
+    padding: 10px 14px;
     margin-left: 10px;
-    border: 1px solid #294D61;
-    border-radius: 8px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: transform 0.12s ease, opacity 0.15s ease;
 }
 
 .adm-header a:hover{
-    border: 1x solid #f44336;
-    background: #f44336;
-    /* transition: 0.5s ; */
-    transform: scale(1.02);
+    transform: translateY(-1px);
+    opacity: 0.9;
 }

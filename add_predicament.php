@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="css/sweetAlert.css">
-    <link rel="stylesheet" href="css/myfarm.css"> <!--CSS link for form-->
-    <title>Add Form</title>
-</head>
-<body>
-
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -18,7 +6,7 @@ session_start();
 
 // Include Files
 include('layout/header.php');
-// include('layout/left.php');
+include('layout/left.php');
 
 // Database Connection
 $conn = new mysqli("localhost", "root", "", "agro_council");
@@ -28,9 +16,9 @@ if ($conn->connect_error) {
 
 // Add Predicament
 if (isset($_POST['submit'])) {
-    $farmer_id = $_POST['farmerid'];
-    $title = $_POST['title'];
-    $description = $_POST['description'];
+    $farmer_id = $_SESSION['id'];
+    $title = trim($_POST['title'] ?? '');
+    $description = trim($_POST['description'] ?? '');
     $errors = [];
 
     // Validate form inputs
@@ -48,8 +36,9 @@ if (isset($_POST['submit'])) {
         <?php
     } else {
 
-    $sql = "INSERT INTO predicament (farmer_id, title, description) VALUES ('$farmer_id', '$title', '$description')";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("INSERT INTO predicament (farmer_id, title, description) VALUES (?, ?, ?)");
+    $stmt->bind_param("iss", $farmer_id, $title, $description);
+    $result = $stmt->execute();
     if ($result) {
         echo "<script>alert('Predicament Inserted Successfully')</script>";
         header("Location: predicament_table.php");
@@ -57,11 +46,13 @@ if (isset($_POST['submit'])) {
     } else {
         echo "Error: " . $conn->error;
     }
-}
+    }
 }
 ?>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="css/sweetAlert.css">
+<link rel="stylesheet" href="css/myfarm.css"> <!--CSS link for form-->
 <link rel="stylesheet" href="css/perdicament_form.css">
 
 <div class="container">
@@ -85,5 +76,4 @@ if (isset($_POST['submit'])) {
     </div>
 </div>
 
-</body>
-</html>
+<script src="js/confirmationSA.js"></script>

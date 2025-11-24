@@ -51,26 +51,31 @@ if(isset($_POST["verify"])){
     <title>OTP Verification</title>
 </head>
 <body>
-    <div class="log"> 
-        <div class="container">
-            <h1>OTP Verification</h1>
-            <form action="" method="post">
-                <div class="group-login" >
-                        <input type="text" maxlength="6" inputmode="numeric" placeholder="OTP Here" name="otp" id="otp" required style="padding-left: 15px;">
+    <div class="auth-shell"> 
+        <div class="auth-card">
+            <div class="auth-header">
+                <p class="eyebrow">Verify code</p>
+                <h1>Enter your OTP</h1>
+                <p class="helper">We sent a 6-digit code to your email. It expires in 30 minutes.</p>
+            </div>
+            <form action="" method="post" class="auth-form">
+                <div class="field">
+                    <label for="otp" class="labelll">One-time code</label>
+                    <input type="text" maxlength="6" inputmode="numeric" placeholder="••••••" name="otp" id="otp" required style="padding-left: 15px;">
                 </div>
                     <?php if (isset($error_message)) : ?>
-                        <div class="errorOTP error-message" id="errorOTP">
+                        <div class="alert error-message" id="errorOTP">
                             <?php echo $error_message; ?>
                         </div>
                     <?php endif; ?>                
                     <div class="button-group">
                         <?php if (isset($user) && strtotime($user["reset_otp_expires_at"]) <= time()) : ?>
-                            <button type="button" id="resendOTPButton">Resend OTP</button>
+                            <button type="button" id="resendOTPButton">Resend code</button>
                         <?php else : ?>
                             <button type="submit" name="verify">Verify</button>
                         <?php endif; ?>
                     </div>
-                <small><a href="../login.php">Go to Login</a></small>
+                <p class="helper center"><a href="../login.php">Back to login</a></p>
             </form>
         </div>
     </div>

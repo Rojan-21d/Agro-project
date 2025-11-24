@@ -1,65 +1,119 @@
-body{
-  background-image: linear-gradient(#55a2d6, 
-  rgba(4,9,30,0.7));
+:root {
+  --admin-bg: #0b1220;
+  --admin-card: #0f1c31;
+  --admin-panel: #111f38;
+  --admin-accent: #22c55e;
+  --admin-text: #e5ecf8;
+  --admin-muted: #94a3b8;
+  --admin-border: rgba(255,255,255,0.08);
+  --admin-radius: 14px;
+  --admin-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  --admin-font: "Manrope","Segoe UI",sans-serif;
 }
-/* Styles for the container */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  /* Styles for the login form */
-  .login-form {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background-image: linear-gradient(#176B87, rgba(4, 9, 30, 0.7));
-  }
-  
-  /* Styles for the form heading */
-  .login-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #fff;
-  }
-  
-  /* Styles for the input fields */
-  .login-form .input-field {
-    margin-bottom: 10px;
-  }
-  
-  .login-form input[type="text"],
-  .login-form input[type="password"] {
-    width: -webkit-fill-available;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  /* Styles for the login button */
-  .login-form button[type="submit"] {
-    width: 70%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-  }
-  
-  .login-form button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  /* Responsive styles for small screens */
-  @media screen and (max-width: 480px) {
-    .login-form {
-      width: 100%;
-    }
-  }
-  
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--admin-font);
+}
+
+body{
+  background: linear-gradient(160deg, #0b1220, #0f1c31);
+  color: var(--admin-text);
+}
+
+.admin-auth-shell{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.admin-auth-card{
+  width: 100%;
+  max-width: 460px;
+  background: var(--admin-panel);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  padding: 26px 24px 30px;
+}
+
+.admin-auth-header .eyebrow{
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 12px;
+  color: var(--admin-muted);
+  margin: 0 0 6px;
+}
+
+.admin-auth-header h1{
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 28px;
+}
+
+.admin-auth-header .helper{
+  margin: 0;
+  color: var(--admin-muted);
+  line-height: 1.5;
+}
+
+.admin-auth-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.field{
+  text-align: left;
+}
+
+.field label{
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--admin-muted);
+}
+
+.field input{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: #0f172a;
+  color: var(--admin-text);
+}
+
+.button-row{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-row button{
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: var(--admin-accent);
+  color: #0f172a;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.button-row button:hover{
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.admin-alert{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(239,68,68,0.12);
+  color: #fecaca;
+  border: 1px solid var(--admin-border);
+}

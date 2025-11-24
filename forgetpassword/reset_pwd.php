@@ -146,22 +146,24 @@ if (!empty($errors)) {
     <title>Reset Password</title>
 </head>
 <body>
-    <div class="log"> 
-        <div class="container">
-            <h1>Reset Password</h1>
-            <form action="" method="post" class="login">    
-                <div class="group-login" >
-                    <label for="password">Password:</label>
-                        <input type="password" placeholder="Enter new password" name="password" id="password" required>
-                        <i class="fa-regular fa-eye" id="togglePassword"></i>
+    <div class="auth-shell"> 
+        <div class="auth-card">
+            <div class="auth-header">
+                <p class="eyebrow">Set new password</p>
+                <h1>Choose a strong password</h1>
+                <p class="helper">Use 8-16 characters. This will replace your old password.</p>
+            </div>
+            <form action="" method="post" class="auth-form">    
+                <div class="field" >
+                    <label for="password">New password</label>
+                    <input type="password" placeholder="Enter new password" name="password" id="password" required>
                 </div>
-                <div class="group-login ">
-                    <label for="confirm password">Confirm Password:</label>
-                        <input type="password" placeholder="Confirm Your Password" name="password_confirmation" id="password_confirmation" required>
-                        <i class="fa-regular fa-eye" id="togglePassword2"></i>
+                <div class="field">
+                    <label for="password_confirmation">Confirm password</label>
+                    <input type="password" placeholder="Confirm your password" name="password_confirmation" id="password_confirmation" required>
                 </div>            
                 <div class="button-group">
-                    <button type="submit" name="verify">Reset Password</button>
+                    <button type="submit" name="verify">Reset password</button>
                 </div>        
             </form>
         </div>

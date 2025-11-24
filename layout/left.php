@@ -20,21 +20,7 @@
             <a href="guidelines.php">View Guidelines</a>
         </li>
         <li>
-            <div class="dropdown">
-                <div class="content">
-                    <p>Profile</p>
-                    <!-- <span>expand_more</span> -->
-                </div>
-                <button type="button"></button>
-                <div class="menu">
-                    <a href="view_profile.php">
-                        <p>My Profile</p>
-                    </a>
-                    <a href="profile.php">
-                        <p>Edit Profile</p>
-                    </a>
-                </div>
-            </div>
+            <a href="profile.php">Profile</a>
         </li>
     </ol>
 </div>

@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 // Include files
 include('layout/header.php');
-// include('layout/left.php');
+include('layout/sidebar.php');
 
 // Database connection
 $conn = new mysqli("localhost", "root", "", "agro_council");
@@ -23,11 +23,26 @@ if (isset($_POST['update'])) {
 $sql = "UPDATE guidelines SET title='$title', description='$description' WHERE gid = '$id'";
 $result=$conn->query($sql);
     if($result){
-        echo '<script>alert("Updated Successfully");</script>';
-        echo '<script>window.location.href="guidelines_table.php"</script>';        
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function(){
+                if (window.fireThemed) {
+                    fireThemed({icon:'success', title:'Updated', text:'Guideline updated successfully'}).then(()=>{ window.location.href='guidelines_table.php'; });
+                } else {
+                    Swal.fire({icon:'success', title:'Updated', text:'Guideline updated successfully'}).then(()=>{ window.location.href='guidelines_table.php'; });
+                }
+            });
+        </script>";
     }
     else{
-        echo"Error";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function(){
+                if (window.fireThemed) {
+                    fireThemed({icon:'error', title:'Error', text:'Could not update guideline.'});
+                } else {
+                    Swal.fire({icon:'error', title:'Error', text:'Could not update guideline.'});
+                }
+            });
+        </script>";
     }
 }
 
@@ -71,3 +86,6 @@ if (isset($_POST['edit_guidelines'])) {
         </form>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/confirmationSA.js"></script>

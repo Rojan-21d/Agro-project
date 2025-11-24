@@ -28,20 +28,25 @@ if ($conn->connect_error) {
 // Delete record if the delete form is submitted
 if (isset($_POST['delete'])) {
     $id = $_POST['fid'];
-    $sql = "DELETE FROM farm WHERE fid = '$id'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("DELETE FROM farm WHERE fid = ? AND farmer_id = ?");
+    $stmt->bind_param("ii", $id, $_SESSION['id']);
+    $result = $stmt->execute();
     if ($result) {
-        echo "<script>alert('Record Deleted Successfully');</script>";
+        echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'success',title:'Deleted',text:'Farm removed successfully'});}else{Swal.fire({icon:'success',title:'Deleted',text:'Farm removed successfully'});}});</script>";
     } else {
-        echo "Error: " . $conn->error;
+        echo "<script>document.addEventListener('DOMContentLoaded',function(){if(window.fireThemed){fireThemed({icon:'error',title:'Error',text:'Could not delete farm. Please try again.'});}else{Swal.fire({icon:'error',title:'Error',text:'Could not delete farm. Please try again.'});}});</script>";
     }
 }
 
 
 
 // Fetch farms for the logged-in user
-$sql = "SELECT * FROM farm WHERE farmer_id = '" . $_SESSION['id'] . "'";
-$result = $conn->query($sql);
+$result = null;
+$stmt = $conn->prepare("SELECT * FROM farm WHERE farmer_id = ?");
+$stmt->bind_param("i", $_SESSION['id']);
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+}
 ?>
 
 
@@ -59,7 +64,6 @@ $result = $conn->query($sql);
                 <tbody>
                     <tr>
                         <th>SN</th>
-                        <th>Farmer ID</th>
                         <th>Farm Area</th>
                         <th>Farm Unit</th>
                         <th>Farm Type</th>
@@ -70,24 +74,24 @@ $result = $conn->query($sql);
                         while ($row = $result->fetch_assoc()) { ?>
                             <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><?php echo $row['farmer_id']; ?></td>
                                 <td><?php echo $row['farm_area']; ?></td>
                                 <td><?php echo $row['farm_unit']; ?></td>
                                 <td><?php echo $row['farm_type']; ?></td>
-                                <td>
-                                    <div class="button-row">
+                                <td class="action-cell">
+                                    <div class="button-row inline">
                                         <form method="post" action="myfarm_edit.php">
                                             <input type="hidden" value="<?php echo $row['fid']; ?>" name="fid" />
                                             <input type="submit" value="Edit" name="edit" />
                                         </form>
-                                        <form method="post" action="home.php">
+                                        <form method="post" action="home.php" onsubmit="confirmDelete(event)">
                                             <input type="hidden" value="<?php echo $row['fid']; ?>" name="fid" />
-                                            <input type="submit" value="Delete" name="delete" />
+                                            <input type="hidden" name="delete" value="1" />
+                                            <input type="submit" value="Delete" />
+                                        </form>
+                                        <form action="add_predicament.php" method="post">
+                                            <input type="submit" value="Add Predicament" name="add">
                                         </form>
                                     </div>
-                                    <form action="add_predicament.php" method="post">
-                                        <input type="submit" value="Add Predicament" name="add">
-                                    </form>
                                 </td>
 
                             </tr>
@@ -103,5 +107,5 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/confirmationSA.js"></script>

@@ -14,10 +14,12 @@ if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }
 
-// Fetch Guidelines based on Counsellor ID stored in the session
+// Fetch Guidelines for the logged-in farmer based on their predicaments
 if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
-    $sql = "SELECT * FROM guidelines WHERE counsellor_id = '" . $_SESSION['id'] . "'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT g.gid, g.title, g.description, g.submitted_date, p.title AS predicament_title, c.name AS counsellor_name FROM guidelines g INNER JOIN predicament p ON g.predicament_id = p.pid LEFT JOIN counsellor c ON g.counsellor_id = c.id WHERE p.farmer_id = ?");
+    $stmt->bind_param("i", $_SESSION['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 }
 ?>
 
@@ -32,30 +34,24 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
             <tbody>
                 <tr>
                     <th>SN</th>
-                    <th>Counsellor ID</th>
-                    <th>Title</th>
+                    <th>Predicament</th>
+                    <th>Counsellor</th>
+                    <th>Guideline Title</th>
                     <th>Description</th>
                     <th>Submitted Date</th>
-                    <th>Predicament ID</th>
-                    <!-- <th>Action</th> -->
                 </tr>
                 <?php if (isset($result) && $result->num_rows > 0) { // Check if $result is set
                     $i = 1;
-                    while ($row = $result->fetch_assoc()) { ?>
-                        <tr>
+                    while ($row = $result->fetch_assoc()) { 
+                        $shortDesc = strlen($row['description']) > 60 ? substr($row['description'], 0, 60) . '...' : $row['description'];
+                        ?>
+                        <tr class="clickable" onclick="window.location='guideline_detail.php?gid=<?php echo $row['gid']; ?>'">
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $row['counsellor_id']; ?></td>
+                            <td><?php echo $row['predicament_title']; ?></td>
+                            <td><?php echo $row['counsellor_name'] ?? '—'; ?></td>
                             <td><?php echo $row['title']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td><?php echo $shortDesc; ?></td>
                             <td><?php echo $row['submitted_date']; ?></td>
-                            <td><?php echo $row['predicament_id']; ?></td>
-
-                            <td>
-                                <!-- <form method="post" action="guidelines_table.php">
-                                    <input type="hidden" value="<?php //echo $row['id']; ?>" name="id" />
-                                    <input type="submit" value="Delete" name="delete" />
-                                </form> -->
-                            </td>
                         </tr>
                     <?php }
                 } else { ?>
