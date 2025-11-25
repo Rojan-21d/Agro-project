@@ -2,10 +2,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 // Database Connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 session_start();
 if(isset($_POST['login']))
 {

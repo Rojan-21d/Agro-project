@@ -1,11 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
-
     // Database connection
-    $conn = new mysqli("localhost", "root", "", "agro_council");
-    if ($conn->connect_error) {
-        die("Connection Error" . $conn->connect_error);
-    }
+    require_once __DIR__ . '/config/db.php';
 
 // submission process
 if(isset($_POST['signup'])){

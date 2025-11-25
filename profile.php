@@ -14,10 +14,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 // Database
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error" . $conn->connect_error);
-}
+require_once __DIR__ . '/config/db.php';
 
 $userSelects = $_SESSION['usertype'];
 // Role-specific layout

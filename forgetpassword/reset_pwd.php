@@ -11,7 +11,7 @@ $otp = $_SESSION['otp'];
 $otp_hash = hash("sha256", $otp);
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
+require_once __DIR__ . '/../config/db.php';
 if ($conn->connect_error) {
     die("Connection Error" . $conn->connect_error);
 }

@@ -22,7 +22,7 @@ include('layout/header.php');
 include('layout/left.php');
 
 // Database Connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
+require_once __DIR__ . '/config/db.php';
 if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }

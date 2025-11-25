@@ -3,11 +3,9 @@
 <link rel="stylesheet" href="../css/sweetAlert.css">
 <?php
 //Database Connection
-$conn=new mysqli("localhost","root", "", "agro_council");
-    if($conn->connect_error){
-        die("Connection Error".$conn->connect_error);
-    }
-  
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
+
 // Check if a button is selected and assign a class to highlight it
 $farmerSelected = isset($_POST['farmer']) ? 'selected' : '';
 $counsellorSelected = isset($_POST['counsellor']) ? 'selected' : '';

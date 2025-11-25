@@ -8,10 +8,8 @@ include('../counsellor/layout/header.php');
 include('../counsellor/layout/sidebar.php');
 
 // Database Connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 
 if(isset($_POST['add_guidelines'])) {
     $pid = $_POST['pid'];

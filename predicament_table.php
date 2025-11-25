@@ -11,10 +11,8 @@ require_once __DIR__ . '/algorithms/predicament_priority.php';
 $predicaments = [];
 
 // Database Connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/config/db.php';
 
 // Delete record
 if (isset($_POST['delete'])) {

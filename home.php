@@ -20,10 +20,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+require_once __DIR__ . '/config/db.php';
 
 // Delete record if the delete form is submitted
 if (isset($_POST['delete'])) {

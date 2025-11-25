@@ -14,7 +14,7 @@ date_default_timezone_set('Asia/Kathmandu');
 $expiry = date("y-m-d H:i:s", time() + 60 * 30);
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
+require_once __DIR__ . '/../config/db.php';
 if ($conn->connect_error) {
     die("Connection Error" . $conn->connect_error);
 }

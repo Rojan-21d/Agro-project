@@ -21,10 +21,7 @@ if (isset($_POST['login'])) {
     $userselects = $_POST['userselects'];
 
     // Database Connection
-    $conn = new mysqli("localhost", "root", "", "agro_council");
-    if ($conn->connect_error) {
-        die("Connection Error: " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/config/db.php';
 
     // Use prepared statements to prevent SQL injection
     $sql = "";
