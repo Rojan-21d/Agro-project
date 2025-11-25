@@ -29,7 +29,18 @@ require_once __DIR__ . '/../config/db.php';
 // Fetch counsellors and workload snapshot for matching
 $counsellors = [];
 $workloadMap = [];
-$cResult = $conn->query("SELECT id, name, address, email, status, specialty FROM counsellor WHERE status = 'Approved'");
+// Support either specialty or speciality column names without breaking older DBs.
+$specialtySelect = "NULL AS specialty";
+$colCheck = $conn->query("SHOW COLUMNS FROM counsellor LIKE 'specialty'");
+if ($colCheck && $colCheck->num_rows > 0) {
+    $specialtySelect = "specialty";
+} else {
+    $colCheck = $conn->query("SHOW COLUMNS FROM counsellor LIKE 'speciality'");
+    if ($colCheck && $colCheck->num_rows > 0) {
+        $specialtySelect = "speciality AS specialty";
+    }
+}
+$cResult = $conn->query("SELECT id, name, address, email, status, {$specialtySelect} FROM counsellor WHERE status = 'Approved'");
 if ($cResult && $cResult->num_rows > 0) {
     while ($cRow = $cResult->fetch_assoc()) {
         $counsellors[] = $cRow;
