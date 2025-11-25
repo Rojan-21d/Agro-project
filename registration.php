@@ -16,6 +16,7 @@ if(isset($_POST['signup'])){
     $email = strtolower($_POST['email']);
     $password = $_POST['password'];
     $userselects = $_POST['userselects'];
+    $specialty = isset($_POST['specialty']) ? trim($_POST['specialty']) : '';
     $table = ($userselects === "farmer") ? "farmer" : "counsellor"; 
 
 
@@ -53,12 +54,23 @@ if(isset($_POST['signup'])){
         $errors[] = "Email Already Registered";
     }
 
+    // Counsellor-only validations
+    if ($userselects === "counsellor") {
+        if ($specialty === '') {
+            $errors[] = "Please choose your specialty.";
+        }
+    }
+
 
 
     // If there are no errors, proceed with inserting into the database
     if (empty($errors)) {
         // Prepare and execute the SQL query
-        $sql = "INSERT INTO $table (name, address, mobile, email, password) VALUES (?, ?, ?, ?, ?)";
+        if ($userselects === "counsellor") {
+            $sql = "INSERT INTO counsellor (name, address, mobile, email, password, specialty) VALUES (?, ?, ?, ?, ?, ?)";
+        } else {
+            $sql = "INSERT INTO farmer (name, address, mobile, email, password) VALUES (?, ?, ?, ?, ?)";
+        }
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
@@ -77,7 +89,11 @@ if(isset($_POST['signup'])){
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // Bind parameters and execute
-            $stmt->bind_param("sssss", $name, $address, $mobile, $email, $hashedPassword);
+            if ($userselects === "counsellor") {
+                $stmt->bind_param("ssssss", $name, $address, $mobile, $email, $hashedPassword, $specialty);
+            } else {
+                $stmt->bind_param("sssss", $name, $address, $mobile, $email, $hashedPassword);
+            }
             if ($stmt->execute()) {
                 // Display a success message
                 $successMessage = ($userselects === "farmer") ?
@@ -165,6 +181,17 @@ if(isset($_POST['signup'])){
                     <label for="counsellor">Counsellor</label>
                 </div>
             </div>
+            <div class="field counsellor-only" style="display:none">
+                <label for="specialty" class="labell">Specialty</label>
+                <select id="specialty" name="specialty">
+                    <option value="">Select your specialty</option>
+                    <option value="Crop diseases">Crop diseases</option>
+                    <option value="Soil & fertility">Soil &amp; fertility</option>
+                    <option value="Irrigation & water">Irrigation &amp; water</option>
+                    <option value="Post-harvest & storage">Post-harvest &amp; storage</option>
+                    <option value="Livestock / animal health">Livestock / animal health</option>
+                </select>
+            </div>
             <div class="button-group">
                 <button type="submit" name="signup" value="signup">Create account</button>
             </div>
@@ -177,3 +204,18 @@ if(isset($_POST['signup'])){
 <?php
 // include('layout/footer.php');
 ?>
+<script>
+    (function() {
+        const farmer = document.getElementById('farmer');
+        const counsellor = document.getElementById('counsellor');
+        const specialtyBlock = document.querySelector('.counsellor-only');
+        function toggleSpecialty() {
+            if (!farmer || !counsellor || !specialtyBlock) return;
+            specialtyBlock.style.display = counsellor.checked ? 'block' : 'none';
+        }
+        [farmer, counsellor].forEach(function(el){
+            if (el) el.addEventListener('change', toggleSpecialty);
+        });
+        toggleSpecialty();
+    })();
+</script>

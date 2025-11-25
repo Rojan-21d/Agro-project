@@ -69,16 +69,32 @@ if (!function_exists('rank_counsellors_for_predicament')) {
             }
         }
 
-        // Text affinity: simple overlap between predicament title and counsellor name/email (placeholder for expertise tags).
+        // Text affinity: match predicament keywords against counsellor specialty.
         $title = strtolower($predicament['title'] ?? '');
         $desc = strtolower($predicament['description'] ?? '');
         $text = $title . ' ' . $desc;
-        $nameEmail = strtolower(($counsellor['name'] ?? '') . ' ' . ($counsellor['email'] ?? ''));
-        $keywords = ['soil', 'pest', 'market', 'irrigation', 'seed', 'crop', 'disease', 'water'];
+
+        // Use the counsellor's specialty (preferred) or fallback to legacy key.
+        $specialty = strtolower($counsellor['specialty'] ?? $counsellor['speciality'] ?? '');
+        $keywords = ['soil', 'pest', 'market', 'irrigation', 'seed', 'crop', 'disease', 'water', 'livestock'];
+
         foreach ($keywords as $kw) {
-            if (strpos($text, $kw) !== false && strpos($nameEmail, $kw) !== false) {
-                $score += 5;
-                $reasons[] = "Matches expertise hint: {$kw}";
+            if (strpos($text, $kw) !== false && strpos($specialty, $kw) !== false) {
+                $score += 6;
+                $reasons[] = "Matches specialty: {$kw}";
+            }
+        }
+
+        // Bonus if specialty token appears anywhere in the predicament text.
+        if ($specialty) {
+            $parts = array_filter(explode(' ', preg_replace('/[^a-z0-9 ]/', ' ', $specialty)));
+            foreach ($parts as $part) {
+                if (strlen($part) < 4) continue;
+                if (strpos($text, $part) !== false) {
+                    $score += 4;
+                    $reasons[] = "Direct specialty match: {$part}";
+                    break;
+                }
             }
         }
 
@@ -98,4 +114,5 @@ if (!function_exists('rank_counsellors_for_predicament')) {
         $score = max(0, min(100, intval(round($score))));
         return ['score' => $score, 'reasons' => $reasons];
     }
+
 }
