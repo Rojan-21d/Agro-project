@@ -31,7 +31,7 @@ if ($conn->connect_error) {
 // Fetch counsellors and workload snapshot for matching
 $counsellors = [];
 $workloadMap = [];
-$cResult = $conn->query("SELECT id, name, address, email, status FROM counsellor WHERE status = 'Approved'");
+$cResult = $conn->query("SELECT id, name, address, email, status, specialty FROM counsellor WHERE status = 'Approved'");
 if ($cResult && $cResult->num_rows > 0) {
     while ($cRow = $cResult->fetch_assoc()) {
         $counsellors[] = $cRow;
@@ -157,7 +157,13 @@ function truncateText($text, $limit = 30) {
                             <td>
                                 <?php
                                 if (!empty($row['recommended_counsellor'])) {
-                                    echo htmlspecialchars($row['recommended_counsellor']['name']) . " (" . $row['recommended_counsellor']['match_score'] . ")";
+                                    $rc = $row['recommended_counsellor'];
+                                    $label = htmlspecialchars($rc['name']) . " (" . $rc['match_score'] . ")";
+                                    $spec = $rc['specialty'] ?? $rc['speciality'] ?? '';
+                                    if (!empty($spec)) {
+                                        $label .= " · " . htmlspecialchars($spec);
+                                    }
+                                    echo $label;
                                 } else {
                                     echo '—';
                                 }

@@ -24,7 +24,7 @@ $row = null;
 // Fetch counsellors for recommendation context
 $counsellors = [];
 $workloadMap = [];
-$cResult = $conn->query("SELECT id, name, address, email, status FROM counsellor WHERE status = 'Approved'");
+$cResult = $conn->query("SELECT id, name, address, email, status, specialty FROM counsellor WHERE status = 'Approved'");
 if ($cResult && $cResult->num_rows > 0) {
     while ($cRow = $cResult->fetch_assoc()) {
         $counsellors[] = $cRow;
@@ -115,7 +115,17 @@ function buildPhotoUrl($photoPath) {
             <?php if (!empty($row['recommended_counsellor'])) { ?>
             <div class="textbox">
                 <label>Suggested Counsellor</label>
-                <div class="pillish"><?php echo htmlspecialchars($row['recommended_counsellor']['name']) . " (" . $row['recommended_counsellor']['match_score'] . ")"; ?></div>
+                <div class="pillish">
+                    <?php
+                        $rc = $row['recommended_counsellor'];
+                        $label = htmlspecialchars($rc['name']) . " (" . $rc['match_score'] . ")";
+                        $spec = $rc['specialty'] ?? $rc['speciality'] ?? '';
+                        if (!empty($spec)) {
+                            $label .= " · " . htmlspecialchars($spec);
+                        }
+                        echo $label;
+                    ?>
+                </div>
             </div>
             <?php } ?>
             <div class="button-row">
@@ -133,4 +143,3 @@ function buildPhotoUrl($photoPath) {
         <?php } ?>
     </div>
 </div>
-

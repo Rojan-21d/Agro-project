@@ -71,6 +71,11 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
         });
     }
 }
+
+function truncateText($text, $limit = 30) {
+    $plain = trim(strip_tags((string) $text));
+    return strlen($plain) > $limit ? substr($plain, 0, $limit) . '...' : $plain;
+}
 ?>
 
 <link rel="stylesheet" href="css/table.css">
@@ -92,9 +97,9 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                 <?php if (!empty($predicaments)) { // Check if $result is set
                     $i = 1;
                     foreach ($predicaments as $row) { ?>
-                        <tr>
+                        <tr class="clickable-row" data-href="predicament_detail.php?pid=<?php echo $row['pid']; ?>">
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $row['title']; ?></td>
+                            <td><?php echo htmlspecialchars($row['title']); ?></td>
                             <td>
                                 <?php if (!empty($row['photo_path'])) { ?>
                                     <a href="<?php echo htmlspecialchars($row['photo_path']); ?>" target="_blank" rel="noopener">
@@ -104,9 +109,9 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
                                     &mdash;
                                 <?php } ?>
                             </td>
-                            <td><?php echo $row['description']; ?></td>
-                            <td><?php echo $row['submitted_date']; ?></td>
-                            <td><?php echo $row['priority_score']; ?></td>
+                            <td><?php echo htmlspecialchars(truncateText($row['description'])); ?></td>
+                            <td><?php echo htmlspecialchars($row['submitted_date']); ?></td>
+                            <td><?php echo htmlspecialchars($row['priority_score']); ?></td>
 
                             <td class="action-cell">
                                 <div class="button-row">
@@ -136,3 +141,18 @@ if (isset($_SESSION['id'])) { // Check if $_SESSION['id'] is set
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/confirmationSA.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.clickable-row').forEach(function (row) {
+        row.addEventListener('click', function (event) {
+            if (event.target.closest('a') || event.target.closest('form')) {
+                return;
+            }
+            var href = row.getAttribute('data-href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+    });
+});
+</script>

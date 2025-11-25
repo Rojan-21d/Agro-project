@@ -85,6 +85,17 @@ h1 {
   transform: translateY(-1px);
 }
 
+/* Hover affordance for clickable rows */
+.fl-table tr.clickable-row {
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.08s ease, box-shadow 0.12s ease;
+}
+.fl-table tr.clickable-row:hover {
+  background: #e0f2fe;
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(15,23,42,0.04);
+}
+
 input[type="submit"] {
   padding: 10px 14px;
   border: none;
