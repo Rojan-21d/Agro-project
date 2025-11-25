@@ -9,10 +9,8 @@ include('../counsellor/layout/header.php');
 include('../counsellor/layout/sidebar.php');
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 
 // Fetch farm details by joining 'farm' and 'farmer' tables based on 'farmer_id'
 $sql = "SELECT * FROM farm INNER JOIN farmer ON farm.farmer_id = farmer.id";

@@ -9,10 +9,7 @@ include('layout/header.php');
 include('layout/left.php');
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+require_once __DIR__ . '/config/db.php';
 
 // Edit farm
 if (isset($_POST['edit_farm'])) {

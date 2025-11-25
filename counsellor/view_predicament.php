@@ -23,10 +23,8 @@ ini_set('display_errors', 1);
 
 
 // Database Connection
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 
 // Fetch counsellors and workload snapshot for matching
 $counsellors = [];

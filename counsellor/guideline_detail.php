@@ -12,10 +12,8 @@ include('../counsellor/layout/header.php');
 include('../counsellor/layout/sidebar.php');
 require_once __DIR__ . '/../algorithms/guideline_similarity.php';
 
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 
 $gid = isset($_GET['gid']) ? intval($_GET['gid']) : 0;
 $row = null;

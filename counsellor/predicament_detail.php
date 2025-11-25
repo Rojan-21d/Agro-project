@@ -13,10 +13,8 @@ include('../counsellor/layout/sidebar.php');
 require_once __DIR__ . '/../algorithms/predicament_priority.php';
 require_once __DIR__ . '/../algorithms/counsellor_matching.php';
 
-$conn = new mysqli("localhost", "root", "", "agro_council");
-if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
-}
+$conn = null;
+require_once __DIR__ . '/../config/db.php';
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
 $row = null;
